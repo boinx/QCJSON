@@ -1,0 +1,359 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		50E49C1B176F46FB002A4C3B /* Build and Install */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 50E49C1C176F46FB002A4C3B /* Build configuration list for PBXAggregateTarget "Build and Install" */;
+			buildPhases = (
+				50E49C21176F4704002A4C3B /* ShellScript */,
+			);
+			dependencies = (
+				50E49C20176F4701002A4C3B /* PBXTargetDependency */,
+			);
+			name = "Build and Install";
+			productName = "Build and Install";
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		504ECD91176F3C6C00AD30BB /* QCJSONPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 504ECD90176F3C6C00AD30BB /* QCJSONPlugIn.m */; };
+		50FCC98C14FF88F7003C383D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50FCC98B14FF88F7003C383D /* Cocoa.framework */; };
+		50FCC98E14FF88F7003C383D /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50FCC98D14FF88F7003C383D /* Quartz.framework */; };
+		50FCC99A14FF88F7003C383D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 50FCC99814FF88F7003C383D /* InfoPlist.strings */; };
+		50FCC9A614FF99F1003C383D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 50FCC9A814FF99F1003C383D /* Localizable.strings */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		50E49C1F176F4701002A4C3B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 50FCC97E14FF88F7003C383D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 50FCC98714FF88F7003C383D;
+			remoteInfo = QCJSON;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		504ECD8F176F3C6C00AD30BB /* QCJSONPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QCJSONPlugIn.h; sourceTree = "<group>"; };
+		504ECD90176F3C6C00AD30BB /* QCJSONPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QCJSONPlugIn.m; sourceTree = "<group>"; };
+		50FCC98814FF88F7003C383D /* QCJSON.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QCJSON.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		50FCC98B14FF88F7003C383D /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		50FCC98D14FF88F7003C383D /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
+		50FCC99014FF88F7003C383D /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		50FCC99114FF88F7003C383D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		50FCC99214FF88F7003C383D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		50FCC99714FF88F7003C383D /* QCJSON-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "QCJSON-Info.plist"; sourceTree = "<group>"; };
+		50FCC99914FF88F7003C383D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		50FCC9A714FF99F1003C383D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		50FCC98414FF88F7003C383D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50FCC98C14FF88F7003C383D /* Cocoa.framework in Frameworks */,
+				50FCC98E14FF88F7003C383D /* Quartz.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		50FCC97C14FF88F7003C383D = {
+			isa = PBXGroup;
+			children = (
+				50FCC99514FF88F7003C383D /* QCJSON */,
+				50FCC98A14FF88F7003C383D /* Frameworks */,
+				50FCC98914FF88F7003C383D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		50FCC98914FF88F7003C383D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				50FCC98814FF88F7003C383D /* QCJSON.plugin */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		50FCC98A14FF88F7003C383D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				50FCC98B14FF88F7003C383D /* Cocoa.framework */,
+				50FCC98D14FF88F7003C383D /* Quartz.framework */,
+				50FCC99014FF88F7003C383D /* AppKit.framework */,
+				50FCC99114FF88F7003C383D /* CoreData.framework */,
+				50FCC99214FF88F7003C383D /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		50FCC99514FF88F7003C383D /* QCJSON */ = {
+			isa = PBXGroup;
+			children = (
+				504ECD8F176F3C6C00AD30BB /* QCJSONPlugIn.h */,
+				504ECD90176F3C6C00AD30BB /* QCJSONPlugIn.m */,
+				50FCC99614FF88F7003C383D /* Supporting Files */,
+			);
+			path = QCJSON;
+			sourceTree = "<group>";
+		};
+		50FCC99614FF88F7003C383D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				50FCC99714FF88F7003C383D /* QCJSON-Info.plist */,
+				50FCC99814FF88F7003C383D /* InfoPlist.strings */,
+				50FCC9A814FF99F1003C383D /* Localizable.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		50FCC98714FF88F7003C383D /* QCJSON */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 50FCC9A114FF88F7003C383D /* Build configuration list for PBXNativeTarget "QCJSON" */;
+			buildPhases = (
+				50FCC98314FF88F7003C383D /* Sources */,
+				50FCC98414FF88F7003C383D /* Frameworks */,
+				50FCC98514FF88F7003C383D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = QCJSON;
+			productName = QCJSON;
+			productReference = 50FCC98814FF88F7003C383D /* QCJSON.plugin */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		50FCC97E14FF88F7003C383D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = "Boinx Software";
+			};
+			buildConfigurationList = 50FCC98114FF88F7003C383D /* Build configuration list for PBXProject "QCJSON" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 50FCC97C14FF88F7003C383D;
+			productRefGroup = 50FCC98914FF88F7003C383D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				50FCC98714FF88F7003C383D /* QCJSON */,
+				50E49C1B176F46FB002A4C3B /* Build and Install */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		50FCC98514FF88F7003C383D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50FCC99A14FF88F7003C383D /* InfoPlist.strings in Resources */,
+				50FCC9A614FF99F1003C383D /* Localizable.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		50E49C21176F4704002A4C3B /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# This shell script simply copies the built plug-in to \"~/Library/Graphics/Quartz Composer Plug-Ins\" and overrides any previous version at that location\n\nmkdir -p \"$USER_LIBRARY_DIR/Graphics/Quartz Composer Plug-Ins\"\nrm -rf \"$USER_LIBRARY_DIR/Graphics/Quartz Composer Plug-Ins/QCJSON.plugin\"\ncp -rf \"$BUILT_PRODUCTS_DIR/QCJSON.plugin\" \"$USER_LIBRARY_DIR/Graphics/Quartz Composer Plug-Ins/\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		50FCC98314FF88F7003C383D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				504ECD91176F3C6C00AD30BB /* QCJSONPlugIn.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		50E49C20176F4701002A4C3B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 50FCC98714FF88F7003C383D /* QCJSON */;
+			targetProxy = 50E49C1F176F4701002A4C3B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		50FCC99814FF88F7003C383D /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				50FCC99914FF88F7003C383D /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		50FCC9A814FF99F1003C383D /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				50FCC9A714FF99F1003C383D /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		50E49C1D176F46FB002A4C3B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		50E49C1E176F46FB002A4C3B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		50FCC99F14FF88F7003C383D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		50FCC9A014FF88F7003C383D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		50FCC9A214FF88F7003C383D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "QCJSON/QCJSON-Prefix.pch";
+				INFOPLIST_FILE = "QCJSON/QCJSON-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Graphics/Quartz Composer Plug-Ins";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Debug;
+		};
+		50FCC9A314FF88F7003C383D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "QCJSON/QCJSON-Prefix.pch";
+				INFOPLIST_FILE = "QCJSON/QCJSON-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Graphics/Quartz Composer Plug-Ins";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		50E49C1C176F46FB002A4C3B /* Build configuration list for PBXAggregateTarget "Build and Install" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				50E49C1D176F46FB002A4C3B /* Debug */,
+				50E49C1E176F46FB002A4C3B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		50FCC98114FF88F7003C383D /* Build configuration list for PBXProject "QCJSON" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				50FCC99F14FF88F7003C383D /* Debug */,
+				50FCC9A014FF88F7003C383D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		50FCC9A114FF88F7003C383D /* Build configuration list for PBXNativeTarget "QCJSON" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				50FCC9A214FF88F7003C383D /* Debug */,
+				50FCC9A314FF88F7003C383D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 50FCC97E14FF88F7003C383D /* Project object */;
+}

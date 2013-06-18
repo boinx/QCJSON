@@ -1,0 +1,6 @@
+//
+// Prefix header for all source files of the 'QCLUA' target in the 'QCLUA' project
+//
+
+#ifdef __OBJC__
+#endif
