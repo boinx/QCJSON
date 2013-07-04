@@ -197,8 +197,12 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 		[request setValue:value forHTTPHeaderField:key];
 	}
 	
-	self.connection = [NSURLConnection connectionWithRequest:request delegate:self];
 	self.content = nil;
+
+	self.connection = [[[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:NO] autorelease];
+	
+	[self.connection scheduleInRunLoop:NSRunLoop.mainRunLoop forMode:NSRunLoopCommonModes];
+	[self.connection start];
 	
 	self.downloadProgress = 0.0;
 	self.doneSignal = NO;
@@ -206,6 +210,8 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 
 - (void)stopConnection
 {
+	[self.connection unscheduleFromRunLoop:NSRunLoop.mainRunLoop forMode:NSRunLoopCommonModes];
+	
 	[self.connection cancel];
 	self.connection = nil;
 }
