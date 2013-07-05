@@ -10,6 +10,8 @@
 
 @interface QCJSONPlugIn : QCPlugIn
 {
+	NSThread *_connectionThread;
+	NSTimer *_connectionThreadTimer;
 	NSURLConnection *_connection;
 	NSMutableData *_content;
 	long long _contentLength;
@@ -17,7 +19,7 @@
 	NSDictionary *_parsedJSON;
 	double _downloadProgress;
 	NSNumber *_doneSignal;
-	NSError *_error;
+	NSError *_error;	
 }
 
 @property (assign) NSString *inputJSONLocation;

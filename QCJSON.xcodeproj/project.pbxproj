@@ -7,16 +7,16 @@
 	objects = {
 
 /* Begin PBXAggregateTarget section */
-		50E49C1B176F46FB002A4C3B /* Build and Install */ = {
+		50E49C1B176F46FB002A4C3B /* QCJSON Install */ = {
 			isa = PBXAggregateTarget;
-			buildConfigurationList = 50E49C1C176F46FB002A4C3B /* Build configuration list for PBXAggregateTarget "Build and Install" */;
+			buildConfigurationList = 50E49C1C176F46FB002A4C3B /* Build configuration list for PBXAggregateTarget "QCJSON Install" */;
 			buildPhases = (
 				50E49C21176F4704002A4C3B /* ShellScript */,
 			);
 			dependencies = (
 				50E49C20176F4701002A4C3B /* PBXTargetDependency */,
 			);
-			name = "Build and Install";
+			name = "QCJSON Install";
 			productName = "Build and Install";
 		};
 /* End PBXAggregateTarget section */
@@ -157,7 +157,7 @@
 			projectRoot = "";
 			targets = (
 				50FCC98714FF88F7003C383D /* QCJSON */,
-				50E49C1B176F46FB002A4C3B /* Build and Install */,
+				50E49C1B176F46FB002A4C3B /* QCJSON Install */,
 			);
 		};
 /* End PBXProject section */
@@ -326,7 +326,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		50E49C1C176F46FB002A4C3B /* Build configuration list for PBXAggregateTarget "Build and Install" */ = {
+		50E49C1C176F46FB002A4C3B /* Build configuration list for PBXAggregateTarget "QCJSON Install" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				50E49C1D176F46FB002A4C3B /* Debug */,

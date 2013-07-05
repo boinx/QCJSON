@@ -20,6 +20,10 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 
 + (NSBundle *)bundle;
 
+@property (strong) NSThread *connectionThread;
+
+// only the connectionThread must access this properties
+@property (nonatomic, strong) NSTimer *connectionThreadTimer;
 @property (nonatomic, strong) NSURLConnection *connection;
 @property (nonatomic, strong) NSMutableData *content;
 @property (nonatomic, assign) long long contentLength;
@@ -44,6 +48,8 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 @dynamic outputDownloadProgress;
 @dynamic outputDoneSignal;
 
+@synthesize connectionThread = _connectionThread;
+@synthesize connectionThreadTimer = _connectionThreadTimer;
 @synthesize connection = _connection;
 @synthesize content = _content;
 @synthesize contentLength = _contentLength;
@@ -157,13 +163,24 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 	self = [super init];
 	if(self != nil)
 	{
+		NSThread *connectionThread = [[NSThread alloc] initWithTarget:self selector:@selector(startConnectionThread) object:nil];
+		self.connectionThread = connectionThread;
 		
+		connectionThread.name = @"QCJSON.ConnectionThead";
+		[connectionThread start];
 	}
 	return self;
 }
 
 - (void)dealloc
 {
+	NSThread *connectionThread = self.connectionThread;
+	if(connectionThread != nil)
+	{
+		[self performSelector:@selector(stopConnectionThread) onThread:connectionThread withObject:nil waitUntilDone:YES];
+		self.connectionThread = nil;
+	}
+	
 	[self.connection cancel];
 	
 	self.connection = nil;
@@ -176,44 +193,74 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 	[super dealloc];
 }
 
-- (void)startConnection
+- (void)startConnectionThread
+{
+	@autoreleasepool
+	{
+		NSTimeInterval timeInterval = [NSDate.distantFuture timeIntervalSinceNow];
+		self.connectionThreadTimer = [NSTimer scheduledTimerWithTimeInterval:timeInterval target:self selector:@selector(connectionTimerFired) userInfo:nil repeats:NO];
+
+		CFRunLoopRun();
+	}
+}
+
+- (void)stopConnectionThread
 {
 	[self stopConnection];
 	
-	NSString *JSONLocation = self.inputJSONLocation;
-	if(JSONLocation == nil)
+	if(self.connectionThreadTimer != nil)
 	{
-		return;
+		[self.connectionThreadTimer invalidate];
+		self.connectionThreadTimer = nil;
 	}
 	
-	NSURL *URL = [NSURL URLWithString:JSONLocation];
-	
-	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL];
-	NSDictionary *HTTPHeaders = self.inputHTTPHeaders;
-	for(NSString *key in HTTPHeaders)
-	{
-		NSString *value = [HTTPHeaders objectForKey:key];
-		
-		[request setValue:value forHTTPHeaderField:key];
-	}
-	
-	self.content = nil;
+	CFRunLoopStop(CFRunLoopGetCurrent());
+}
 
-	self.connection = [[[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:NO] autorelease];
+- (void)connectionTimerFired
+{
 	
-	[self.connection scheduleInRunLoop:NSRunLoop.mainRunLoop forMode:NSRunLoopCommonModes];
-	[self.connection start];
+}
+
+- (void)startConnection
+{
+	@autoreleasepool
+	{
+		[self stopConnection];
 	
-	self.downloadProgress = 0.0;
-	self.doneSignal = NO;
+		NSString *JSONLocation = self.inputJSONLocation;
+		if(JSONLocation == nil)
+		{
+			return;
+		}
+	
+		NSURL *URL = [NSURL URLWithString:JSONLocation];
+	
+		NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL];
+		NSDictionary *HTTPHeaders = self.inputHTTPHeaders;
+		for(NSString *key in HTTPHeaders)
+		{
+			NSString *value = [HTTPHeaders objectForKey:key];
+		
+			[request setValue:value forHTTPHeaderField:key];
+		}
+	
+		self.content = nil;
+
+		self.connection = [NSURLConnection connectionWithRequest:request delegate:self];
+	
+		self.downloadProgress = 0.0;
+		self.doneSignal = NO;
+	}
 }
 
 - (void)stopConnection
 {
-	[self.connection unscheduleFromRunLoop:NSRunLoop.mainRunLoop forMode:NSRunLoopCommonModes];
-	
-	[self.connection cancel];
-	self.connection = nil;
+	@autoreleasepool
+	{
+		[self.connection cancel];
+		self.connection = nil;
+	}
 }
 
 #pragma mark - NSURLConnectionDelegate
@@ -323,7 +370,7 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 {
 	if([self didValueForInputKeyChange:QCJSONPlugInInputUpdateSignal] && self.inputUpdateSignal == YES)
 	{
-		[self startConnection];
+		[self performSelector:@selector(startConnection) onThread:self.connectionThread withObject:nil waitUntilDone:YES];
 	}
 	
 	if(self.doneSignal != nil)
