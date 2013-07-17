@@ -9,11 +9,5 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 Also see:
 
-LUA:
-http://www.lua.org/license.html
-
-NoodleLineMarker:
-https://github.com/MrNoodle/NoodleKit
-
-AirHockey Example:
-http://code.google.com/p/qcluaplugin
+JSON:
+http://www.json.org/
