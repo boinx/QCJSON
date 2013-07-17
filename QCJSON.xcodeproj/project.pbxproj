@@ -28,8 +28,6 @@
 		50B9C58B17956B490014D150 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B9C58A17956B490014D150 /* Security.framework */; };
 		50FCC98C14FF88F7003C383D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50FCC98B14FF88F7003C383D /* Cocoa.framework */; };
 		50FCC98E14FF88F7003C383D /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50FCC98D14FF88F7003C383D /* Quartz.framework */; };
-		50FCC99A14FF88F7003C383D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 50FCC99814FF88F7003C383D /* InfoPlist.strings */; };
-		50FCC9A614FF99F1003C383D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 50FCC9A814FF99F1003C383D /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,8 +55,6 @@
 		50FCC99114FF88F7003C383D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		50FCC99214FF88F7003C383D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		50FCC99714FF88F7003C383D /* QCJSON-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "QCJSON-Info.plist"; sourceTree = "<group>"; };
-		50FCC99914FF88F7003C383D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		50FCC9A714FF99F1003C383D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,19 +118,9 @@
 				504ECD90176F3C6C00AD30BB /* QCJSONPlugIn.m */,
 				50B9C58317956AA80014D150 /* QCJSONStreamingPlugIn.h */,
 				50B9C58417956AA80014D150 /* QCJSONStreamingPlugIn.m */,
-				50FCC99614FF88F7003C383D /* Supporting Files */,
+				50FCC99714FF88F7003C383D /* QCJSON-Info.plist */,
 			);
 			path = QCJSON;
-			sourceTree = "<group>";
-		};
-		50FCC99614FF88F7003C383D /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				50FCC99714FF88F7003C383D /* QCJSON-Info.plist */,
-				50FCC99814FF88F7003C383D /* InfoPlist.strings */,
-				50FCC9A814FF99F1003C383D /* Localizable.strings */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -189,8 +175,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				50FCC99A14FF88F7003C383D /* InfoPlist.strings in Resources */,
-				50FCC9A614FF99F1003C383D /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -232,25 +216,6 @@
 			targetProxy = 50E49C1F176F4701002A4C3B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		50FCC99814FF88F7003C383D /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				50FCC99914FF88F7003C383D /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		50FCC9A814FF99F1003C383D /* Localizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				50FCC9A714FF99F1003C383D /* en */,
-			);
-			name = Localizable.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		50E49C1D176F46FB002A4C3B /* Debug */ = {

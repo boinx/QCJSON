@@ -32,7 +32,7 @@ static NSString * QCJSONStreamingPlugInInputUpdateSignal = @"inputUpdateSignal";
 
 @property (strong) NSDictionary *parsedJSON;
 @property (strong) NSNumber *doneSignal;
-@property (strong) NSNumber *connectedSignal;
+@property (strong) NSNumber *connected;
 @property (strong) NSError *error;
 
 @end
@@ -43,12 +43,13 @@ static NSString * QCJSONStreamingPlugInInputUpdateSignal = @"inputUpdateSignal";
 @implementation QCJSONStreamingPlugIn
 
 @dynamic inputJSONLocation;
+@dynamic inputHTTPMethod;
 @dynamic inputHTTPHeaders;
 @dynamic inputUpdateSignal;
 
 @dynamic outputParsedJSON;
 @dynamic outputDoneSignal;
-@dynamic outputConnectedSignal;
+@dynamic outputConnected;
 
 @synthesize connectionThread = _connectionThread;
 @synthesize connectionThreadTimer = _connectionThreadTimer;
@@ -58,7 +59,7 @@ static NSString * QCJSONStreamingPlugInInputUpdateSignal = @"inputUpdateSignal";
 
 @synthesize parsedJSON = _parsedJSON;
 @synthesize doneSignal = _doneSignal;
-@synthesize connectedSignal = _connectedSignal;
+@synthesize connected = _connected;
 @synthesize error = _error;
 
 + (NSBundle *)bundle
@@ -68,46 +69,11 @@ static NSString * QCJSONStreamingPlugInInputUpdateSignal = @"inputUpdateSignal";
 
 + (NSDictionary *)attributes
 {
-	NSBundle *bundle = [self bundle];
-	
-	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-    
-	[attributes setObject:@"JSON Stream" forKey:QCPlugInAttributeNameKey];
-	[attributes setObject:@"JSON Stream" forKey:QCPlugInAttributeDescriptionKey];
-	[attributes setObject:NSLocalizedStringWithDefaultValue(@"PlugInCopyright", nil, bundle, @"© 2013 Boinx Software Ltd.", @"Copyright text") forKey:QCPlugInAttributeCopyrightKey];
-    
-#if 0
-#if defined(MAC_OS_X_VERSION_10_7) && (MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_7)
-	if(&QCPlugInAttributeCategoriesKey)
-    {
-		NSArray *categories = [NSLocalizedStringWithDefaultValue(@"PlugInCategories", nil, bundle, @"Program;Utility", @"Categories seperated by semicolon") componentsSeparatedByString:@";"];
-		if(categories.count > 0)
-		{
-			[attributes setObject:categories forKey:QCPlugInAttributeCategoriesKey];
-		}
-	}
-#endif
-    
-#if defined(MAC_OS_X_VERSION_10_7) && (MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_7)
-    if(&QCPlugInAttributeExamplesKey)
-    {
-		NSArray *exampleStrings = [NSLocalizedStringWithDefaultValue(@"PlugInExamples", nil, bundle, @"http://www.boinx.com;http://www.lua.org", @"Example URLs seperated by semicolon") componentsSeparatedByString:@";"];
-		NSMutableArray *examples = [NSMutableArray arrayWithCapacity:exampleStrings.count];
-		for(NSString *exampleString in exampleStrings)
-		{
-			[examples addObject:[NSURL URLWithString:exampleString]];
-		}
-
-		if(examples.count > 0)
-		{
-			[attributes setObject:examples forKey:QCPlugInAttributeExamplesKey];
-  
-		}
-	}
-#endif
-#endif
-
-	return attributes;
+	return @{
+		QCPlugInAttributeNameKey: @"JSON Streaming",
+		QCPlugInAttributeDescriptionKey: @"Streaming JSON from a HTTP source",
+		QCPlugInAttributeCopyrightKey: @"© 2013 Boinx Software Ltd."
+	};
 }
 
 + (NSDictionary *)attributesForPropertyPortWithKey:(NSString *)key
@@ -115,6 +81,11 @@ static NSString * QCJSONStreamingPlugInInputUpdateSignal = @"inputUpdateSignal";
 	if([key isEqualToString:QCJSONStreamingPlugInInputJSONLocation])
 	{
 		return @{ QCPortAttributeNameKey: @"JSON Location" };
+	}
+	
+	if([key isEqualToString:@"inputHTTPMethod"])
+	{
+		return @{ QCPortAttributeNameKey: @"HTTP Method" };
 	}
 	
 	if([key isEqualToString:@"inputHTTPHeaders"])
@@ -135,6 +106,11 @@ static NSString * QCJSONStreamingPlugInInputUpdateSignal = @"inputUpdateSignal";
 	if([key isEqualToString:@"outputDoneSignal"])
 	{
 		return @{ QCPortAttributeNameKey: @"Done Signal" };
+	}
+	
+	if([key isEqualToString:@"outputConnected"])
+	{
+		return @{ QCPortAttributeNameKey: @"Connected" };
 	}
 
 	return nil;
@@ -185,7 +161,7 @@ static NSString * QCJSONStreamingPlugInInputUpdateSignal = @"inputUpdateSignal";
 
 	self.parsedJSON = nil;
 	self.doneSignal = nil;
-	self.connectedSignal = nil;
+	self.connected = nil;
 	self.error = nil;
 	
 	[super dealloc];
@@ -236,6 +212,12 @@ static NSString * QCJSONStreamingPlugInInputUpdateSignal = @"inputUpdateSignal";
 	
 		NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL];
 		
+		NSString *HTTPMethod = self.inputHTTPMethod;
+		if(HTTPMethod.length > 0)
+		{
+			request.HTTPMethod = HTTPMethod;
+		}
+
 		NSDictionary *HTTPHeaders = self.inputHTTPHeaders;
 		for(NSString *key in HTTPHeaders)
 		{
@@ -249,7 +231,7 @@ static NSString * QCJSONStreamingPlugInInputUpdateSignal = @"inputUpdateSignal";
 		self.connection = [NSURLConnection connectionWithRequest:request delegate:self];
 	
 		self.doneSignal = @NO;
-		self.connectedSignal = @YES;
+		self.connected = @YES;
 	}
 }
 
@@ -269,7 +251,7 @@ static NSString * QCJSONStreamingPlugInInputUpdateSignal = @"inputUpdateSignal";
 	[self stopConnection];
 	
 	self.doneSignal = @NO;
-	self.connectedSignal = @NO;
+	self.connected = @NO;
 	
 	self.error = error;
 }
@@ -283,7 +265,7 @@ static NSString * QCJSONStreamingPlugInInputUpdateSignal = @"inputUpdateSignal";
 		[self stopConnection];
 		
 		self.doneSignal = @NO;
-		self.connectedSignal = @NO;
+		self.connected = @NO;
 		
 		return;
 	}
@@ -296,7 +278,7 @@ static NSString * QCJSONStreamingPlugInInputUpdateSignal = @"inputUpdateSignal";
 		[self stopConnection];
 			
 		self.doneSignal = @NO;
-		self.connectedSignal = @NO;
+		self.connected = @NO;
 		
 		NSDictionary *userInfo = @{ NSLocalizedDescriptionKey: [NSHTTPURLResponse localizedStringForStatusCode:statusCode] };
 		self.error = [NSError errorWithDomain:NSURLErrorDomain code:statusCode userInfo:userInfo];
@@ -367,7 +349,7 @@ static NSString * QCJSONStreamingPlugInInputUpdateSignal = @"inputUpdateSignal";
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-	self.connectedSignal = @NO;
+	self.connected = @NO;
 
 	[self stopConnection];
 }
@@ -412,10 +394,10 @@ static NSString * QCJSONStreamingPlugInInputUpdateSignal = @"inputUpdateSignal";
 		}
 	}
 	
-	if(self.connectedSignal != nil)
+	if(self.connected != nil)
 	{
-		self.outputConnectedSignal = self.connectedSignal.boolValue;
-		self.connectedSignal = nil;
+		self.outputConnected = self.connected.boolValue;
+		self.connected = nil;
 	}
 	
 	if(self.error)

@@ -18,16 +18,17 @@
 
 	NSDictionary *_parsedJSON;
 	NSNumber *_doneSignal;
-	NSNumber *_connectedSignal;
+	NSNumber *_connected;
 	NSError *_error;
 }
 
 @property (assign) NSString *inputJSONLocation;
+@property (assign) NSString *inputHTTPMethod;
 @property (assign) NSDictionary *inputHTTPHeaders;
 @property (assign) BOOL inputUpdateSignal;
 
 @property (assign) NSDictionary *outputParsedJSON;
 @property (assign) BOOL outputDoneSignal;
-@property (assign) BOOL outputConnectedSignal;
+@property (assign) BOOL outputConnected;
 
 @end
