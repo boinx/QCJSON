@@ -15,14 +15,15 @@
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.1</string>
+	<string>1.3</string>
 	<key>CFBundleVersion</key>
-	<string>1.1</string>
+	<string>1.3</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2012 Boinx Software. All rights reserved.</string>
+	<string>Copyright © 2013 Boinx Software. All rights reserved.</string>
 	<key>QCPlugInClasses</key>
 	<array>
 		<string>QCJSONPlugIn</string>
+		<string>QCJSONStreamingPlugIn</string>
 	</array>
 </dict>
 </plist>

@@ -23,6 +23,8 @@
 
 /* Begin PBXBuildFile section */
 		504ECD91176F3C6C00AD30BB /* QCJSONPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 504ECD90176F3C6C00AD30BB /* QCJSONPlugIn.m */; };
+		50B9C58517956AA80014D150 /* QCJSONStreamingPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B9C58417956AA80014D150 /* QCJSONStreamingPlugIn.m */; };
+		50B9C58B17956B490014D150 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B9C58A17956B490014D150 /* Security.framework */; };
 		50FCC98C14FF88F7003C383D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50FCC98B14FF88F7003C383D /* Cocoa.framework */; };
 		50FCC98E14FF88F7003C383D /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50FCC98D14FF88F7003C383D /* Quartz.framework */; };
 		50FCC99A14FF88F7003C383D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 50FCC99814FF88F7003C383D /* InfoPlist.strings */; };
@@ -42,6 +44,9 @@
 /* Begin PBXFileReference section */
 		504ECD8F176F3C6C00AD30BB /* QCJSONPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QCJSONPlugIn.h; sourceTree = "<group>"; };
 		504ECD90176F3C6C00AD30BB /* QCJSONPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QCJSONPlugIn.m; sourceTree = "<group>"; };
+		50B9C58317956AA80014D150 /* QCJSONStreamingPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QCJSONStreamingPlugIn.h; sourceTree = "<group>"; };
+		50B9C58417956AA80014D150 /* QCJSONStreamingPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QCJSONStreamingPlugIn.m; sourceTree = "<group>"; };
+		50B9C58A17956B490014D150 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		50FCC98814FF88F7003C383D /* QCJSON.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QCJSON.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		50FCC98B14FF88F7003C383D /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		50FCC98D14FF88F7003C383D /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
@@ -58,6 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50B9C58B17956B490014D150 /* Security.framework in Frameworks */,
 				50FCC98C14FF88F7003C383D /* Cocoa.framework in Frameworks */,
 				50FCC98E14FF88F7003C383D /* Quartz.framework in Frameworks */,
 			);
@@ -86,6 +92,7 @@
 		50FCC98A14FF88F7003C383D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				50B9C58A17956B490014D150 /* Security.framework */,
 				50FCC98B14FF88F7003C383D /* Cocoa.framework */,
 				50FCC98D14FF88F7003C383D /* Quartz.framework */,
 				50FCC99014FF88F7003C383D /* AppKit.framework */,
@@ -100,6 +107,8 @@
 			children = (
 				504ECD8F176F3C6C00AD30BB /* QCJSONPlugIn.h */,
 				504ECD90176F3C6C00AD30BB /* QCJSONPlugIn.m */,
+				50B9C58317956AA80014D150 /* QCJSONStreamingPlugIn.h */,
+				50B9C58417956AA80014D150 /* QCJSONStreamingPlugIn.m */,
 				50FCC99614FF88F7003C383D /* Supporting Files */,
 			);
 			path = QCJSON;
@@ -196,6 +205,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				504ECD91176F3C6C00AD30BB /* QCJSONPlugIn.m in Sources */,
+				50B9C58517956AA80014D150 /* QCJSONStreamingPlugIn.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
