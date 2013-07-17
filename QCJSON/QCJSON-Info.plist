@@ -15,9 +15,9 @@
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.4</string>
+	<string>${BX_VERSION}</string>
 	<key>CFBundleVersion</key>
-	<string>1.4</string>
+	<string>${BX_BUILD_NUMBER}</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2013 Boinx Software. All rights reserved.</string>
 	<key>QCPlugInClasses</key>

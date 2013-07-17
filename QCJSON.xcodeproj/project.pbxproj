@@ -45,6 +45,8 @@
 		504ECD90176F3C6C00AD30BB /* QCJSONPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QCJSONPlugIn.m; sourceTree = "<group>"; };
 		5053A88F17968414008E5DFB /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		5053A89017968414008E5DFB /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
+		50B70A271796DB700067C74C /* BuildNumber.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = BuildNumber.xcconfig; sourceTree = "<group>"; };
+		50B70A281796DB700067C74C /* Project.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Project.xcconfig; sourceTree = "<group>"; };
 		50B9C58317956AA80014D150 /* QCJSONStreamingPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QCJSONStreamingPlugIn.h; sourceTree = "<group>"; };
 		50B9C58417956AA80014D150 /* QCJSONStreamingPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QCJSONStreamingPlugIn.m; sourceTree = "<group>"; };
 		50B9C58A17956B490014D150 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -80,9 +82,19 @@
 			path = JSONKit;
 			sourceTree = "<group>";
 		};
+		50B70A261796DB700067C74C /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				50B70A271796DB700067C74C /* BuildNumber.xcconfig */,
+				50B70A281796DB700067C74C /* Project.xcconfig */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
 		50FCC97C14FF88F7003C383D = {
 			isa = PBXGroup;
 			children = (
+				50B70A261796DB700067C74C /* Config */,
 				50FCC99514FF88F7003C383D /* QCJSON */,
 				5053A88D17968414008E5DFB /* JSONKit */,
 				50FCC98A14FF88F7003C383D /* Frameworks */,
@@ -234,6 +246,7 @@
 		};
 		50FCC99F14FF88F7003C383D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 50B70A281796DB700067C74C /* Project.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
@@ -263,6 +276,7 @@
 		};
 		50FCC9A014FF88F7003C383D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 50B70A281796DB700067C74C /* Project.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
