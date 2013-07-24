@@ -31,7 +31,9 @@ static NSString * QCJSONStreamingPlugInInputUpdateSignal = @"inputUpdateSignal";
 @property (nonatomic, assign) NSInteger jsonLength;
 
 @property (strong) NSDictionary *parsedJSON;
+@property (strong) NSNumber *statusCode;
 @property (strong) NSNumber *doneSignal;
+@property (strong) NSNumber *connecting;
 @property (strong) NSNumber *connected;
 @property (strong) NSError *error;
 
@@ -48,7 +50,9 @@ static NSString * QCJSONStreamingPlugInInputUpdateSignal = @"inputUpdateSignal";
 @dynamic inputUpdateSignal;
 
 @dynamic outputParsedJSON;
+@dynamic outputStatusCode;
 @dynamic outputDoneSignal;
+@dynamic outputConnecting;
 @dynamic outputConnected;
 
 @synthesize connectionThread = _connectionThread;
@@ -58,7 +62,9 @@ static NSString * QCJSONStreamingPlugInInputUpdateSignal = @"inputUpdateSignal";
 @synthesize jsonLength = _jsonLength;
 
 @synthesize parsedJSON = _parsedJSON;
+@synthesize statusCode = _statusCode;
 @synthesize doneSignal = _doneSignal;
+@synthesize connecting = _connecting;
 @synthesize connected = _connected;
 @synthesize error = _error;
 
@@ -102,6 +108,11 @@ static NSString * QCJSONStreamingPlugInInputUpdateSignal = @"inputUpdateSignal";
 	{
 		return @{ QCPortAttributeNameKey: @"Parsed JSON" };
 	}
+	
+	if([key isEqualToString:@"outputStatusCode"])
+	{
+		return @{ QCPortAttributeNameKey: @"HTTP Status Code" };
+	}
 
 	if([key isEqualToString:@"outputDoneSignal"])
 	{
@@ -111,6 +122,11 @@ static NSString * QCJSONStreamingPlugInInputUpdateSignal = @"inputUpdateSignal";
 	if([key isEqualToString:@"outputConnected"])
 	{
 		return @{ QCPortAttributeNameKey: @"Connected" };
+	}
+	
+	if([key isEqualToString:@"outputConnecting"])
+	{
+		return @{ QCPortAttributeNameKey: @"Connecting" };
 	}
 
 	return nil;
@@ -160,7 +176,9 @@ static NSString * QCJSONStreamingPlugInInputUpdateSignal = @"inputUpdateSignal";
 	self.jsonMessage = nil;
 
 	self.parsedJSON = nil;
+	self.statusCode = nil;
 	self.doneSignal = nil;
+	self.connecting = nil;
 	self.connected = nil;
 	self.error = nil;
 	
@@ -227,11 +245,14 @@ static NSString * QCJSONStreamingPlugInInputUpdateSignal = @"inputUpdateSignal";
 		}
 	
 		self.jsonMessage = nil;
-
+		
 		self.connection = [NSURLConnection connectionWithRequest:request delegate:self];
 	
+		self.statusCode = @0;
+		
+		self.connecting = @YES;
+		self.connected = @NO;
 		self.doneSignal = @NO;
-		self.connected = @YES;
 	}
 }
 
@@ -250,7 +271,10 @@ static NSString * QCJSONStreamingPlugInInputUpdateSignal = @"inputUpdateSignal";
 {
 	[self stopConnection];
 	
+	self.statusCode = @0;
+	
 	self.doneSignal = @NO;
+	self.connecting = @NO;
 	self.connected = @NO;
 	
 	self.error = error;
@@ -264,8 +288,10 @@ static NSString * QCJSONStreamingPlugInInputUpdateSignal = @"inputUpdateSignal";
 	{
 		[self stopConnection];
 		
+		self.statusCode = @0;
+		
 		self.doneSignal = @NO;
-		self.connected = @NO;
+		self.connecting = @NO;
 		
 		return;
 	}
@@ -276,15 +302,21 @@ static NSString * QCJSONStreamingPlugInInputUpdateSignal = @"inputUpdateSignal";
 	if(statusCode != 200)
 	{
 		[self stopConnection];
-			
+		
+		self.statusCode = @(statusCode);
+		
 		self.doneSignal = @NO;
-		self.connected = @NO;
+		self.connecting = @NO;
 		
 		NSDictionary *userInfo = @{ NSLocalizedDescriptionKey: [NSHTTPURLResponse localizedStringForStatusCode:statusCode] };
 		self.error = [NSError errorWithDomain:NSURLErrorDomain code:statusCode userInfo:userInfo];
 			
 		return;
 	}
+	
+	self.statusCode = @200;
+	self.connecting = @NO;
+	self.connected = @YES;
 	
 	self.jsonLength = 0;
 	self.jsonMessage = nil;
@@ -349,6 +381,7 @@ static NSString * QCJSONStreamingPlugInInputUpdateSignal = @"inputUpdateSignal";
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
+	self.connecting = @NO;
 	self.connected = @NO;
 
 	[self stopConnection];
@@ -392,6 +425,18 @@ static NSString * QCJSONStreamingPlugInInputUpdateSignal = @"inputUpdateSignal";
 			
 			self.doneSignal = nil;
 		}
+	}
+	
+	if(self.statusCode != nil)
+	{
+		self.outputStatusCode = self.statusCode.unsignedIntegerValue;
+		self.statusCode = nil;
+	}
+	
+	if(self.connecting != nil)
+	{
+		self.outputConnecting = self.connecting.boolValue;
+		self.connecting = nil;
 	}
 	
 	if(self.connected != nil)
