@@ -17,7 +17,9 @@
 	NSInteger _jsonLength;
 
 	NSDictionary *_parsedJSON;
+	NSNumber *_statusCode;
 	NSNumber *_doneSignal;
+	NSNumber *_connecting;
 	NSNumber *_connected;
 	NSError *_error;
 }
@@ -28,7 +30,9 @@
 @property (assign) BOOL inputUpdateSignal;
 
 @property (assign) NSDictionary *outputParsedJSON;
+@property (assign) NSUInteger outputStatusCode;
 @property (assign) BOOL outputDoneSignal;
+@property (assign) BOOL outputConnecting;
 @property (assign) BOOL outputConnected;
 
 @end
