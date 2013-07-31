@@ -41,6 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4C43CD9617A8FDB500F3CC9D /* BXRevision.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = BXRevision.sh; sourceTree = "<group>"; };
 		504ECD8F176F3C6C00AD30BB /* QCJSONPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QCJSONPlugIn.h; sourceTree = "<group>"; };
 		504ECD90176F3C6C00AD30BB /* QCJSONPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QCJSONPlugIn.m; sourceTree = "<group>"; };
 		5053A88F17968414008E5DFB /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
@@ -73,6 +74,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4C43CD9517A8FDA300F3CC9D /* Scripts */ = {
+			isa = PBXGroup;
+			children = (
+				4C43CD9617A8FDB500F3CC9D /* BXRevision.sh */,
+			);
+			path = Scripts;
+			sourceTree = "<group>";
+		};
 		5053A88D17968414008E5DFB /* JSONKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -94,6 +103,7 @@
 		50FCC97C14FF88F7003C383D = {
 			isa = PBXGroup;
 			children = (
+				4C43CD9517A8FDA300F3CC9D /* Scripts */,
 				50B70A261796DB700067C74C /* Config */,
 				50FCC99514FF88F7003C383D /* QCJSON */,
 				5053A88D17968414008E5DFB /* JSONKit */,

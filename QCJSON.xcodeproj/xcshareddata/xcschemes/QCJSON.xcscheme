@@ -10,7 +10,7 @@
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run Script"
-               scriptText = "REV_TIME=`git --git-dir=&quot;${PROJECT_DIR}/.git&quot; log -1 --pretty=format:%ct`&#10;REV_SHA1=`git --git-dir=&quot;${PROJECT_DIR}/.git&quot; rev-list --max-count=1 HEAD`&#10;&#10;GIT_REV=`git --git-dir=&quot;${PROJECT_DIR}/.git&quot; rev-list --reverse HEAD | grep -n ${REV_SHA1} | cut -d: -f1`&#10;&#10;echo BX_BUILD_NUMBER=$(( ${GIT_REV}+10000 )) &gt; &quot;${PROJECT_DIR}/Config/BuildNumber.xcconfig&quot;&#10;">
+               scriptText = "sh &quot;${PROJECT_DIR}/Scripts/BXRevision.sh&quot;">
                <EnvironmentBuildable>
                   <BuildableReference
                      BuildableIdentifier = "primary"
