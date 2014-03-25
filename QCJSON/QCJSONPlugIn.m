@@ -276,7 +276,7 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 	long long contentLength = [contentLengthString longLongValue];
 	self.contentLength = contentLength > 0 ? contentLength : 0;
 	
-	self.content = [NSMutableData dataWithCapacity:contentLength];
+	self.content = [NSMutableData dataWithCapacity:(NSUInteger)contentLength];
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
