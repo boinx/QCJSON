@@ -23,7 +23,6 @@
 
 /* Begin PBXBuildFile section */
 		504ECD91176F3C6C00AD30BB /* QCJSONPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 504ECD90176F3C6C00AD30BB /* QCJSONPlugIn.m */; };
-		5053A89317968414008E5DFB /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 5053A89017968414008E5DFB /* JSONKit.m */; };
 		50B9C58517956AA80014D150 /* QCJSONStreamingPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B9C58417956AA80014D150 /* QCJSONStreamingPlugIn.m */; };
 		50B9C58B17956B490014D150 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B9C58A17956B490014D150 /* Security.framework */; };
 		50FCC98C14FF88F7003C383D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50FCC98B14FF88F7003C383D /* Cocoa.framework */; };
@@ -225,7 +224,6 @@
 			files = (
 				504ECD91176F3C6C00AD30BB /* QCJSONPlugIn.m in Sources */,
 				50B9C58517956AA80014D150 /* QCJSONStreamingPlugIn.m in Sources */,
-				5053A89317968414008E5DFB /* JSONKit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

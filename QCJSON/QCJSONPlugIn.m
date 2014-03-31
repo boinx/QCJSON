@@ -7,8 +7,6 @@
 
 #import "QCJSONPlugIn.h"
 
-#import "JSONKit.h"
-
 #ifndef NSAppKitVersionNumber10_7
 #define NSAppKitVersionNumber10_7 1138
 #endif
@@ -300,9 +298,7 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 	[self stopConnection];
 	
 	NSError *error = nil;
-	// TODO: 10.6 does not support NSJSONSerialization
-	//NSDictionary *JSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-	NSDictionary *JSON = [self.content objectFromJSONDataWithParseOptions:0 error:&error];
+	NSDictionary *JSON = [NSJSONSerialization JSONObjectWithData:self.content options:0 error:&error];
 	if(JSON != nil)
 	{
 		self.parsedJSON = JSON;
