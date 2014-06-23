@@ -160,6 +160,11 @@
 			attributes = {
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Boinx Software";
+				TargetAttributes = {
+					50FCC98714FF88F7003C383D = {
+						DevelopmentTeam = 6372P8EH2J;
+					};
+				};
 			};
 			buildConfigurationList = 50FCC98114FF88F7003C383D /* Build configuration list for PBXProject "QCJSON" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -297,12 +302,15 @@
 		50FCC9A214FF88F7003C383D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "QCJSON/QCJSON-Prefix.pch";
 				INFOPLIST_FILE = "QCJSON/QCJSON-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Graphics/Quartz Composer Plug-Ins";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -311,12 +319,15 @@
 		50FCC9A314FF88F7003C383D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "QCJSON/QCJSON-Prefix.pch";
 				INFOPLIST_FILE = "QCJSON/QCJSON-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Graphics/Quartz Composer Plug-Ins";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = plugin;
 			};
