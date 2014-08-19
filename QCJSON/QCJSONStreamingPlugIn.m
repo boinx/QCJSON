@@ -14,6 +14,7 @@
 
 static NSString * QCJSONStreamingPlugInInputJSONLocation = @"inputJSONLocation";
 static NSString * QCJSONStreamingPlugInInputUpdateSignal = @"inputUpdateSignal";
+static NSString * QCJSONStreamingPlugInInputReplaceXMLEntities = @"inputReplaceXMLEntities";
 
 
 @interface QCJSONStreamingPlugIn () <NSURLConnectionDelegate, NSURLConnectionDataDelegate>
@@ -28,12 +29,13 @@ static NSString * QCJSONStreamingPlugInInputUpdateSignal = @"inputUpdateSignal";
 @property (nonatomic, strong) NSMutableString *jsonMessage;
 @property (nonatomic, assign) NSInteger jsonLength;
 
-@property (strong) NSDictionary *parsedJSON;
-@property (strong) NSNumber *statusCode;
-@property (strong) NSNumber *doneSignal;
-@property (strong) NSNumber *connecting;
-@property (strong) NSNumber *connected;
-@property (strong) NSError *error;
+@property (atomic, strong) NSDictionary *parsedJSON;
+@property (atomic, strong) NSNumber *statusCode;
+@property (atomic, strong) NSNumber *doneSignal;
+@property (atomic, strong) NSNumber *connecting;
+@property (atomic, strong) NSNumber *connected;
+@property (atomic, strong) NSError *error;
+@property (atomic, assign) BOOL replaceXMLEntities;
 
 @end
 
@@ -46,6 +48,7 @@ static NSString * QCJSONStreamingPlugInInputUpdateSignal = @"inputUpdateSignal";
 @dynamic inputHTTPMethod;
 @dynamic inputHTTPHeaders;
 @dynamic inputUpdateSignal;
+@dynamic inputReplaceXMLEntities;
 
 @dynamic outputParsedJSON;
 @dynamic outputStatusCode;
@@ -65,6 +68,8 @@ static NSString * QCJSONStreamingPlugInInputUpdateSignal = @"inputUpdateSignal";
 @synthesize connecting = _connecting;
 @synthesize connected = _connected;
 @synthesize error = _error;
+@synthesize replaceXMLEntities = _replaceXMLEntities;
+
 
 + (NSBundle *)bundle
 {
@@ -100,6 +105,11 @@ static NSString * QCJSONStreamingPlugInInputUpdateSignal = @"inputUpdateSignal";
 	if([key isEqualToString:QCJSONStreamingPlugInInputUpdateSignal])
 	{
 		return @{ QCPortAttributeNameKey: @"Update Signal" };
+	}
+	
+	if([key isEqualToString:QCJSONStreamingPlugInInputReplaceXMLEntities])
+	{
+		return @{ QCPortAttributeNameKey: @"Replace XML Entities", QCPortAttributeDefaultValueKey: @NO };
 	}
 		
 	if([key isEqualToString:@"outputParsedJSON"])
@@ -338,17 +348,33 @@ static NSString * QCJSONStreamingPlugInInputUpdateSignal = @"inputUpdateSignal";
 				length = [component integerValue];
 				message = [NSMutableString stringWithCapacity:length];
 			}
-			else if(message.length < length)
+			else
 			{
 				[message appendString:component];
 				
 				if(message.length < length)
 				{
-					[message appendString:delimiter];
+					// The delimiter is counted in the length, but must not appear in the JSON message.
+					length -= delimiter.length;
 				}
-				
-				if(message.length == length)
+
+				if(message.length >= length)
 				{
+					if(message.length != length)
+					{
+						// TODO: error logging? message is longer than expected
+					}
+					
+					if(self.replaceXMLEntities)
+					{
+						// TODO: improve this, still good enough for twitter
+						[message replaceOccurrencesOfString:@"&quot;" withString:@"\\\"" options:0 range:NSMakeRange(0, message.length)]; // must be escaped
+						[message replaceOccurrencesOfString:@"&apos;" withString:@"'" options:0 range:NSMakeRange(0, message.length)];
+						[message replaceOccurrencesOfString:@"&lt;"   withString:@"<" options:0 range:NSMakeRange(0, message.length)];
+						[message replaceOccurrencesOfString:@"&gt;"   withString:@">" options:0 range:NSMakeRange(0, message.length)];
+						[message replaceOccurrencesOfString:@"&amp;"  withString:@"&" options:0 range:NSMakeRange(0, message.length)];
+					}
+					
 					NSData *data = [message dataUsingEncoding:NSUTF8StringEncoding];
 					
 					NSError *error = nil;
