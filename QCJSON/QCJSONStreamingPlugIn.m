@@ -430,6 +430,11 @@ static NSString * QCJSONStreamingPlugInInputReplaceXMLEntities = @"inputReplaceX
 		[self performSelector:@selector(startConnection) onThread:self.connectionThread withObject:nil waitUntilDone:YES];
 	}
 	
+	if([self didValueForInputKeyChange:QCJSONStreamingPlugInInputReplaceXMLEntities])
+	{
+		self.replaceXMLEntities = self.inputReplaceXMLEntities;
+	}
+	
 	if(self.doneSignal != nil)
 	{
 		if(self.doneSignal.boolValue)
