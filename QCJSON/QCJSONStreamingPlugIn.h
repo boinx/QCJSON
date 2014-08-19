@@ -22,12 +22,14 @@
 	NSNumber *_connecting;
 	NSNumber *_connected;
 	NSError *_error;
+	BOOL _replaceXMLEntities;
 }
 
 @property (assign) NSString *inputJSONLocation;
 @property (assign) NSString *inputHTTPMethod;
 @property (assign) NSDictionary *inputHTTPHeaders;
 @property (assign) BOOL inputUpdateSignal;
+@property (assign) BOOL inputReplaceXMLEntities;
 
 @property (assign) NSDictionary *outputParsedJSON;
 @property (assign) NSUInteger outputStatusCode;
