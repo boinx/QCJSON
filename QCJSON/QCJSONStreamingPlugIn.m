@@ -30,12 +30,12 @@ static NSString * QCJSONStreamingPlugInInputUpdateSignal = @"inputUpdateSignal";
 @property (nonatomic, strong) NSMutableString *jsonMessage;
 @property (nonatomic, assign) NSInteger jsonLength;
 
-@property (strong) NSDictionary *parsedJSON;
-@property (strong) NSNumber *statusCode;
-@property (strong) NSNumber *doneSignal;
-@property (strong) NSNumber *connecting;
-@property (strong) NSNumber *connected;
-@property (strong) NSError *error;
+@property (atomic, strong) NSDictionary *parsedJSON;
+@property (atomic, strong) NSNumber *statusCode;
+@property (atomic, strong) NSNumber *doneSignal;
+@property (atomic, strong) NSNumber *connecting;
+@property (atomic, strong) NSNumber *connected;
+@property (atomic, strong) NSError *error;
 
 @end
 
@@ -340,17 +340,23 @@ static NSString * QCJSONStreamingPlugInInputUpdateSignal = @"inputUpdateSignal";
 				length = [component integerValue];
 				message = [NSMutableString stringWithCapacity:length];
 			}
-			else if(message.length < length)
+			else
 			{
 				[message appendString:component];
 				
 				if(message.length < length)
 				{
-					[message appendString:delimiter];
+					// The delimiter is counted in the length, but must not appear in the JSON message.
+					length -= delimiter.length;
 				}
-				
-				if(message.length == length)
+
+				if(message.length >= length)
 				{
+					if(message.length != length)
+					{
+						// TODO: error logging? message is longer than expected
+					}
+					
 					NSData *data = [message dataUsingEncoding:NSUTF8StringEncoding];
 					
 					NSError *error = nil;
