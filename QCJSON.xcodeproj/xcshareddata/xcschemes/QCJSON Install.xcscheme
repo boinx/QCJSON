@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0600"
+   LastUpgradeVersion = "0610"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -42,6 +42,15 @@
       <PathRunnable
          FilePath = "/Applications/Graphics Tools/Quartz Composer.app">
       </PathRunnable>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "50E49C1B176F46FB002A4C3B"
+            BuildableName = "QCJSON Install"
+            BlueprintName = "QCJSON Install"
+            ReferencedContainer = "container:QCJSON.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
