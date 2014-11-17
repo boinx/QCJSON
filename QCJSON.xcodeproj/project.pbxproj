@@ -6,21 +6,6 @@
 	objectVersion = 46;
 	objects = {
 
-/* Begin PBXAggregateTarget section */
-		50E49C1B176F46FB002A4C3B /* QCJSON Install */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = 50E49C1C176F46FB002A4C3B /* Build configuration list for PBXAggregateTarget "QCJSON Install" */;
-			buildPhases = (
-				50E49C21176F4704002A4C3B /* ShellScript */,
-			);
-			dependencies = (
-				50E49C20176F4701002A4C3B /* PBXTargetDependency */,
-			);
-			name = "QCJSON Install";
-			productName = "Build and Install";
-		};
-/* End PBXAggregateTarget section */
-
 /* Begin PBXBuildFile section */
 		504ECD91176F3C6C00AD30BB /* QCJSONPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 504ECD90176F3C6C00AD30BB /* QCJSONPlugIn.m */; };
 		50B9C58517956AA80014D150 /* QCJSONStreamingPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B9C58417956AA80014D150 /* QCJSONStreamingPlugIn.m */; };
@@ -28,16 +13,6 @@
 		50FCC98C14FF88F7003C383D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50FCC98B14FF88F7003C383D /* Cocoa.framework */; };
 		50FCC98E14FF88F7003C383D /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50FCC98D14FF88F7003C383D /* Quartz.framework */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		50E49C1F176F4701002A4C3B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 50FCC97E14FF88F7003C383D /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 50FCC98714FF88F7003C383D;
-			remoteInfo = QCJSON;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		4C43CD9617A8FDB500F3CC9D /* BXRevision.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = BXRevision.sh; sourceTree = "<group>"; };
@@ -179,7 +154,6 @@
 			projectRoot = "";
 			targets = (
 				50FCC98714FF88F7003C383D /* QCJSON */,
-				50E49C1B176F46FB002A4C3B /* QCJSON Install */,
 			);
 		};
 /* End PBXProject section */
@@ -194,22 +168,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		50E49C21176F4704002A4C3B /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# This shell script simply copies the built plug-in to \"~/Library/Graphics/Quartz Composer Plug-Ins\" and overrides any previous version at that location\n\nmkdir -p \"$USER_LIBRARY_DIR/Graphics/Quartz Composer Plug-Ins\"\nrm -rf \"$USER_LIBRARY_DIR/Graphics/Quartz Composer Plug-Ins/QCJSON.plugin\"\ncp -rf \"$BUILT_PRODUCTS_DIR/QCJSON.plugin\" \"$USER_LIBRARY_DIR/Graphics/Quartz Composer Plug-Ins/\"\n";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		50FCC98314FF88F7003C383D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -222,29 +180,7 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		50E49C20176F4701002A4C3B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 50FCC98714FF88F7003C383D /* QCJSON */;
-			targetProxy = 50E49C1F176F4701002A4C3B /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
 /* Begin XCBuildConfiguration section */
-		50E49C1D176F46FB002A4C3B /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		50E49C1E176F46FB002A4C3B /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 		50FCC99F14FF88F7003C383D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 50B70A281796DB700067C74C /* Project.xcconfig */;
@@ -270,7 +206,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -294,6 +230,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -335,15 +272,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		50E49C1C176F46FB002A4C3B /* Build configuration list for PBXAggregateTarget "QCJSON Install" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				50E49C1D176F46FB002A4C3B /* Debug */,
-				50E49C1E176F46FB002A4C3B /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		50FCC98114FF88F7003C383D /* Build configuration list for PBXProject "QCJSON" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

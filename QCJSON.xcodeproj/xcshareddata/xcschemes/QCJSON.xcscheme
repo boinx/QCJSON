@@ -57,6 +57,27 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
+      <PreActions>
+         <ExecutionAction
+            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
+            <ActionContent
+               title = "Run Script"
+               scriptText = "# This shell script simply copies the built plug-in to &quot;~/Library/Graphics/Quartz Composer Plug-Ins&quot; and overrides any previous version at that location&#10;&#10;mkdir -p &quot;$USER_LIBRARY_DIR/Graphics/Quartz Composer Plug-Ins&quot;&#10;rm -rf &quot;$USER_LIBRARY_DIR/Graphics/Quartz Composer Plug-Ins/$FULL_PRODUCT_NAME&quot;&#10;cp -rf &quot;$BUILT_PRODUCTS_DIR/$FULL_PRODUCT_NAME&quot; &quot;$USER_LIBRARY_DIR/Graphics/Quartz Composer Plug-Ins/&quot;">
+               <EnvironmentBuildable>
+                  <BuildableReference
+                     BuildableIdentifier = "primary"
+                     BlueprintIdentifier = "50FCC98714FF88F7003C383D"
+                     BuildableName = "QCJSON.plugin"
+                     BlueprintName = "QCJSON"
+                     ReferencedContainer = "container:QCJSON.xcodeproj">
+                  </BuildableReference>
+               </EnvironmentBuildable>
+            </ActionContent>
+         </ExecutionAction>
+      </PreActions>
+      <PathRunnable
+         FilePath = "/Applications/Quartz Composer.app">
+      </PathRunnable>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
