@@ -187,35 +187,56 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 	
 }
 
-- (void)startConnection
+- (void)startConnectionWithJSONLocation:(NSString *)JSONLocation
 {
 	@autoreleasepool
 	{
 		[self stopConnection];
 	
-		NSString *JSONLocation = self.inputJSONLocation;
-		if(JSONLocation == nil)
-		{
-			return;
-		}
-	
 		NSURL *URL = [NSURL URLWithString:JSONLocation];
-	
-		NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL];
-		NSDictionary *HTTPHeaders = self.inputHTTPHeaders;
-		for(NSString *key in HTTPHeaders)
+		if(URL.scheme == nil)
 		{
-			NSString *value = [HTTPHeaders objectForKey:key];
-		
-			[request setValue:value forHTTPHeaderField:key];
+			URL = [NSURL fileURLWithPath:JSONLocation];
 		}
+		
+		NSLog(@"%@ %@", URL, URL.scheme);
+		
+		if([URL.scheme isEqualToString:@"file"])
+		{
+			NSData *data = [NSData dataWithContentsOfURL:URL];
+			
+			NSError *error = nil;
+			NSDictionary *JSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+			if(JSON != nil)
+			{
+				self.parsedJSON = JSON;
+				
+				self.downloadProgress = 1.0;
+				self.doneSignal = @YES;
+			}
+			else
+			{
+				self.downloadProgress = 0.0;
+				self.doneSignal = @NO;
+				
+				self.error = error;
+			}
+		}
+		else
+		{
+			NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL];
+			NSDictionary *HTTPHeaders = self.inputHTTPHeaders;
+			for(NSString *key in HTTPHeaders)
+			{
+				NSString *value = [HTTPHeaders objectForKey:key];
+				[request setValue:value forHTTPHeaderField:key];
+			}
 	
-		self.content = nil;
-
-		self.connection = [NSURLConnection connectionWithRequest:request delegate:self];
+			self.connection = [NSURLConnection connectionWithRequest:request delegate:self];
 	
-		self.downloadProgress = 0.0;
-		self.doneSignal = NO;
+			self.downloadProgress = 0.0;
+			self.doneSignal = NO;
+		}
 	}
 }
 
@@ -225,6 +246,8 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 	{
 		[self.connection cancel];
 		self.connection = nil;
+
+		self.content = nil;
 	}
 }
 
@@ -295,8 +318,6 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-	[self stopConnection];
-	
 	NSError *error = nil;
 	NSDictionary *JSON = [NSJSONSerialization JSONObjectWithData:self.content options:0 error:&error];
 	if(JSON != nil)
@@ -314,7 +335,7 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 		self.error = error;
 	}
 	
-	self.content = nil;
+	[self stopConnection];
 }
 
 @end
@@ -335,7 +356,9 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 {
 	if([self didValueForInputKeyChange:QCJSONPlugInInputUpdateSignal] && self.inputUpdateSignal == YES)
 	{
-		[self performSelector:@selector(startConnection) onThread:self.connectionThread withObject:nil waitUntilDone:YES];
+		NSString *JSONLocation = self.inputJSONLocation;
+
+		[self performSelector:@selector(startConnectionWithJSONLocation:) onThread:self.connectionThread withObject:JSONLocation waitUntilDone:YES];
 	}
 	
 	if(self.doneSignal != nil)
