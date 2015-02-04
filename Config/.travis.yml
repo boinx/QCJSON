@@ -1,0 +1,4 @@
+language: objective-c
+
+script:
+- xctool -project QCJSON.xcodeproj -scheme QCJSON CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGN_ENTITLEMENTS=""

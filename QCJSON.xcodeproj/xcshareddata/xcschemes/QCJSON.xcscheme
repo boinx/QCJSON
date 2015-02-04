@@ -10,7 +10,7 @@
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run Script"
-               scriptText = "sh &quot;${PROJECT_DIR}/Scripts/BXRevision.sh&quot;">
+               scriptText = "sh &quot;${PROJECT_DIR}/Scripts/UpdateBuildNumber.sh&quot;">
                <EnvironmentBuildable>
                   <BuildableReference
                      BuildableIdentifier = "primary"
@@ -62,7 +62,7 @@
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run Script"
-               scriptText = "# This shell script simply copies the built plug-in to &quot;~/Library/Graphics/Quartz Composer Plug-Ins&quot; and overrides any previous version at that location&#10;&#10;mkdir -p &quot;$USER_LIBRARY_DIR/Graphics/Quartz Composer Plug-Ins&quot;&#10;rm -rf &quot;$USER_LIBRARY_DIR/Graphics/Quartz Composer Plug-Ins/$FULL_PRODUCT_NAME&quot;&#10;cp -rf &quot;$BUILT_PRODUCTS_DIR/$FULL_PRODUCT_NAME&quot; &quot;$USER_LIBRARY_DIR/Graphics/Quartz Composer Plug-Ins/&quot;">
+               scriptText = "sh &quot;${PROJECT_DIR}/Scripts/InstallPlugIn.sh&quot;">
                <EnvironmentBuildable>
                   <BuildableReference
                      BuildableIdentifier = "primary"

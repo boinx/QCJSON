@@ -8,6 +8,6 @@
 
 #include "BuildNumber.xcconfig"
 
-BX_VERSION = 1.5
+BX_VERSION = 1.6
 
 CODE_SIGN_IDENTITY = Mac Developer

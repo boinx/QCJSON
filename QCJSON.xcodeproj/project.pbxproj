@@ -15,7 +15,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4C43CD9617A8FDB500F3CC9D /* BXRevision.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = BXRevision.sh; sourceTree = "<group>"; };
+		503E2B661A82100600E81D6B /* InstallPlugIn.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = InstallPlugIn.sh; sourceTree = "<group>"; };
+		503E2B671A82100600E81D6B /* UpdateBuildNumber.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = UpdateBuildNumber.sh; sourceTree = "<group>"; };
+		503E2B6A1A82103B00E81D6B /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
 		504ECD8F176F3C6C00AD30BB /* QCJSONPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QCJSONPlugIn.h; sourceTree = "<group>"; };
 		504ECD90176F3C6C00AD30BB /* QCJSONPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QCJSONPlugIn.m; sourceTree = "<group>"; };
 		50B70A271796DB700067C74C /* BuildNumber.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = BuildNumber.xcconfig; sourceTree = "<group>"; };
@@ -49,7 +51,8 @@
 		4C43CD9517A8FDA300F3CC9D /* Scripts */ = {
 			isa = PBXGroup;
 			children = (
-				4C43CD9617A8FDB500F3CC9D /* BXRevision.sh */,
+				503E2B661A82100600E81D6B /* InstallPlugIn.sh */,
+				503E2B671A82100600E81D6B /* UpdateBuildNumber.sh */,
 			);
 			path = Scripts;
 			sourceTree = "<group>";
@@ -59,6 +62,7 @@
 			children = (
 				50B70A271796DB700067C74C /* BuildNumber.xcconfig */,
 				50B70A281796DB700067C74C /* Project.xcconfig */,
+				503E2B6A1A82103B00E81D6B /* .travis.yml */,
 			);
 			path = Config;
 			sourceTree = "<group>";
