@@ -192,6 +192,11 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 	@autoreleasepool
 	{
 		[self stopConnection];
+		
+		if(JSONLocation.length == 0)
+		{
+			return;
+		}
 	
 		NSURL *URL = [NSURL URLWithString:JSONLocation];
 		if(URL.scheme == nil)
@@ -358,7 +363,7 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 	{
 		NSString *JSONLocation = self.inputJSONLocation;
 
-		[self performSelector:@selector(startConnectionWithJSONLocation:) onThread:self.connectionThread withObject:JSONLocation waitUntilDone:YES];
+		[self performSelector:@selector(startConnectionWithJSONLocation:) onThread:self.connectionThread withObject:JSONLocation waitUntilDone:NO];
 	}
 	
 	if(self.doneSignal != nil)
