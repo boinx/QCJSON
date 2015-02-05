@@ -28,6 +28,9 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 @property (nonatomic, strong) NSMutableData *content;
 @property (nonatomic, assign) long long contentLength;
 
+@property (copy) NSString *JSONLocation;
+@property (copy) NSDictionary *HTTPHeaders;
+
 @property (strong) NSDictionary *parsedJSON;
 @property (assign) double downloadProgress;
 @property (assign) NSNumber *doneSignal;
@@ -187,11 +190,13 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 	
 }
 
-- (void)startConnectionWithJSONLocation:(NSString *)JSONLocation
+- (void)startConnection
 {
 	@autoreleasepool
 	{
 		[self stopConnection];
+		
+		NSString *JSONLocation = self.JSONLocation;
 		
 		if(JSONLocation.length == 0)
 		{
@@ -221,16 +226,17 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 			}
 			else
 			{
+				self.error = error;
+
 				self.downloadProgress = 0.0;
 				self.doneSignal = @NO;
-				
-				self.error = error;
 			}
 		}
 		else
 		{
 			NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL];
-			NSDictionary *HTTPHeaders = self.inputHTTPHeaders;
+
+			NSDictionary *HTTPHeaders = self.HTTPHeaders;
 			for(NSString *key in HTTPHeaders)
 			{
 				NSString *value = [HTTPHeaders objectForKey:key];
@@ -361,9 +367,10 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 {
 	if([self didValueForInputKeyChange:QCJSONPlugInInputUpdateSignal] && self.inputUpdateSignal == YES)
 	{
-		NSString *JSONLocation = self.inputJSONLocation;
+		self.JSONLocation = self.inputJSONLocation;
+		self.HTTPHeaders = self.HTTPHeaders;
 
-		[self performSelector:@selector(startConnectionWithJSONLocation:) onThread:self.connectionThread withObject:JSONLocation waitUntilDone:NO];
+		[self performSelector:@selector(startConnection) onThread:self.connectionThread withObject:nil waitUntilDone:NO];
 	}
 	
 	if(self.doneSignal != nil)
