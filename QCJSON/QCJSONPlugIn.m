@@ -57,6 +57,9 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 @synthesize content = _content;
 @synthesize contentLength = _contentLength;
 
+@synthesize JSONLocation = _JSONLocation;
+@synthesize HTTPHeaders = _HTTPHeaders;
+
 @synthesize parsedJSON = _parsedJSON;
 @synthesize downloadProgress = _downloadProgress;
 @synthesize doneSignal = _doneSignal;
@@ -157,6 +160,9 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 	self.parsedJSON = nil;
 	self.doneSignal = nil;
 	self.error = nil;
+
+	self.HTTPHeaders = nil;
+	self.JSONLocation = nil;
 	
 	[super dealloc];
 }

@@ -16,6 +16,9 @@
 	NSMutableData *_content;
 	long long _contentLength;
 
+	NSString *_JSONLocation;
+	NSDictionary *_HTTPHeaders;
+
 	NSDictionary *_parsedJSON;
 	double _downloadProgress;
 	NSNumber *_doneSignal;
