@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0610"
+   LastUpgradeVersion = "0620"
    version = "1.7">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -76,6 +76,7 @@
          </ExecutionAction>
       </PreActions>
       <PathRunnable
+         runnableDebuggingMode = "0"
          FilePath = "/Applications/Quartz Composer.app">
       </PathRunnable>
       <MacroExpansion>
