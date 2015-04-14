@@ -137,7 +137,7 @@
 		50FCC97E14FF88F7003C383D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = "Boinx Software";
 				TargetAttributes = {
 					50FCC98714FF88F7003C383D = {
