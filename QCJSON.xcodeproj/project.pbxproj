@@ -137,7 +137,7 @@
 		50FCC97E14FF88F7003C383D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0630;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Boinx Software";
 				TargetAttributes = {
 					50FCC98714FF88F7003C383D = {
@@ -196,6 +196,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -250,6 +251,7 @@
 				GCC_PREFIX_HEADER = "QCJSON/QCJSON-Prefix.pch";
 				INFOPLIST_FILE = "QCJSON/QCJSON-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Graphics/Quartz Composer Plug-Ins";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.boinx.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
@@ -267,6 +269,7 @@
 				GCC_PREFIX_HEADER = "QCJSON/QCJSON-Prefix.pch";
 				INFOPLIST_FILE = "QCJSON/QCJSON-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Graphics/Quartz Composer Plug-Ins";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.boinx.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
