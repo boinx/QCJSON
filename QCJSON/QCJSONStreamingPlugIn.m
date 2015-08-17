@@ -160,7 +160,7 @@ static NSString * QCJSONStreamingPlugInInputReplaceXMLEntities = @"inputReplaceX
 	self = [super init];
 	if(self != nil)
 	{
-		NSThread *connectionThread = [[NSThread alloc] initWithTarget:self selector:@selector(startConnectionThread) object:nil];
+		NSThread *connectionThread = [[[NSThread alloc] initWithTarget:self selector:@selector(startConnectionThread) object:nil] autorelease];
 		self.connectionThread = connectionThread;
 		
 		connectionThread.name = @"QCJSON.ConnectionThead";
