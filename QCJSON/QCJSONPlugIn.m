@@ -374,7 +374,7 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 	if([self didValueForInputKeyChange:QCJSONPlugInInputUpdateSignal] && self.inputUpdateSignal == YES)
 	{
 		self.JSONLocation = self.inputJSONLocation;
-        self.HTTPHeaders = self.inputHTTPHeaders;
+		self.HTTPHeaders = self.inputHTTPHeaders;
 
 		[self performSelector:@selector(startConnection) onThread:self.connectionThread withObject:nil waitUntilDone:NO];
 	}
