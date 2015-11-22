@@ -18,6 +18,7 @@
 
 	NSString *_JSONLocation;
 	NSDictionary *_HTTPHeaders;
+    NSString *_bodyString;
 
 	NSDictionary *_parsedJSON;
 	double _downloadProgress;
@@ -27,6 +28,7 @@
 
 @property (assign) NSString *inputJSONLocation;
 @property (assign) NSDictionary *inputHTTPHeaders;
+@property (assign) NSString *inputBodyString;
 @property (assign) BOOL inputUpdateSignal;
 
 @property (assign) NSDictionary *outputParsedJSON;

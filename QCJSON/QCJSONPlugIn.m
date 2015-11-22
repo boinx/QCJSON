@@ -30,6 +30,7 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 
 @property (copy) NSString *JSONLocation;
 @property (copy) NSDictionary *HTTPHeaders;
+@property (copy) NSString *bodyString;
 
 @property (strong) NSDictionary *parsedJSON;
 @property (assign) double downloadProgress;
@@ -45,6 +46,7 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 
 @dynamic inputJSONLocation;
 @dynamic inputHTTPHeaders;
+@dynamic inputBodyString;
 @dynamic inputUpdateSignal;
 
 @dynamic outputParsedJSON;
@@ -59,6 +61,7 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 
 @synthesize JSONLocation = _JSONLocation;
 @synthesize HTTPHeaders = _HTTPHeaders;
+@synthesize bodyString = _bodyString;
 
 @synthesize parsedJSON = _parsedJSON;
 @synthesize downloadProgress = _downloadProgress;
@@ -90,7 +93,12 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 	{
 		return @{ QCPortAttributeNameKey: @"HTTP Headers" };
 	}
-	
+
+	if([key isEqualToString:@"inputBodyString"])
+	{
+		return @{ QCPortAttributeNameKey: @"Body String" };
+	}
+    
 	if([key isEqualToString:QCJSONPlugInInputUpdateSignal])
 	{
 		return @{ QCPortAttributeNameKey: @"Update Signal" };
@@ -162,6 +170,7 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 	self.error = nil;
 
 	self.HTTPHeaders = nil;
+    self.bodyString = nil;
 	self.JSONLocation = nil;
 	
 	[super dealloc];
@@ -249,6 +258,12 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 				[request setValue:value forHTTPHeaderField:key];
 			}
 	
+            if ([self.bodyString length])
+            {
+                [request setHTTPMethod:@"POST"];
+                [request setHTTPBody:[self.bodyString dataUsingEncoding:NSUTF8StringEncoding]];
+            }
+            
 			self.connection = [NSURLConnection connectionWithRequest:request delegate:self];
 	
 			self.downloadProgress = 0.0;
@@ -375,6 +390,7 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 	{
 		self.JSONLocation = self.inputJSONLocation;
 		self.HTTPHeaders = self.HTTPHeaders;
+ 		self.bodyString = self.inputBodyString;
 
 		[self performSelector:@selector(startConnection) onThread:self.connectionThread withObject:nil waitUntilDone:NO];
 	}
