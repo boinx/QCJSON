@@ -170,7 +170,7 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 	self.error = nil;
 
 	self.HTTPHeaders = nil;
-    self.bodyString = nil;
+	self.bodyString = nil;
 	self.JSONLocation = nil;
 	
 	[super dealloc];
@@ -258,11 +258,11 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 				[request setValue:value forHTTPHeaderField:key];
 			}
 	
-            if ([self.bodyString length])
-            {
-                [request setHTTPMethod:@"POST"];
-                [request setHTTPBody:[self.bodyString dataUsingEncoding:NSUTF8StringEncoding]];
-            }
+			if ([self.bodyString length])
+			{
+				[request setHTTPMethod:@"POST"];
+				[request setHTTPBody:[self.bodyString dataUsingEncoding:NSUTF8StringEncoding]];
+			}
             
 			self.connection = [NSURLConnection connectionWithRequest:request delegate:self];
 	

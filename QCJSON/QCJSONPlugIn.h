@@ -18,7 +18,7 @@
 
 	NSString *_JSONLocation;
 	NSDictionary *_HTTPHeaders;
-    NSString *_bodyString;
+	NSString *_bodyString;
 
 	NSDictionary *_parsedJSON;
 	double _downloadProgress;
