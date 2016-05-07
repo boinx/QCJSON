@@ -215,7 +215,7 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 			URL = [NSURL fileURLWithPath:JSONLocation];
 		}
 		
-		NSLog(@"%@ %@", URL, URL.scheme);
+		// NSLog(@"%@ %@", URL, URL.scheme);
 		
 		if([URL.scheme isEqualToString:@"file"])
 		{
