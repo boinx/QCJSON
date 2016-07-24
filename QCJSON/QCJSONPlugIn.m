@@ -220,9 +220,14 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 		if([URL.scheme isEqualToString:@"file"])
 		{
 			NSData *data = [NSData dataWithContentsOfURL:URL];
-			
+			NSDictionary *JSON = nil;
 			NSError *error = nil;
-			NSDictionary *JSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+			
+			if(data != nil)
+			{
+				JSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+			}
+			
 			if(JSON != nil)
 			{
 				self.parsedJSON = JSON;
