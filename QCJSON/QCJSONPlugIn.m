@@ -277,87 +277,99 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
-	[self stopConnection];
-	
-	self.downloadProgress = 0.0;
-	self.doneSignal = @NO;
-	
-	self.error = error;
+	if(connection == self.connection)
+	{
+		[self stopConnection];
+		
+		self.downloadProgress = 0.0;
+		self.doneSignal = @NO;
+		
+		self.error = error;
+	}
 }
 
 #pragma mark - NSURLConnectionDataDelegate
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
-	if(![response isKindOfClass:NSHTTPURLResponse.class])
+	if(connection == self.connection)
 	{
-		[self stopConnection];
-		
-		self.downloadProgress = 0.0;
-		self.doneSignal = @NO;
-		
-		return;
-	}
-	
-	NSHTTPURLResponse *HTTPResponse = (NSHTTPURLResponse *)response;
-	
-	NSInteger statusCode = HTTPResponse.statusCode;
-	if(statusCode != 200)
-	{
-		[self stopConnection];
+		if(![response isKindOfClass:NSHTTPURLResponse.class])
+		{
+			[self stopConnection];
 			
-		self.downloadProgress = 0.0;
-		self.doneSignal = @NO;
-		
-		NSDictionary *userInfo = @{ NSLocalizedDescriptionKey: [NSHTTPURLResponse localizedStringForStatusCode:statusCode] };
-		self.error = [NSError errorWithDomain:NSURLErrorDomain code:statusCode userInfo:userInfo];
+			self.downloadProgress = 0.0;
+			self.doneSignal = @NO;
 			
-		return;
+			return;
+		}
+		
+		NSHTTPURLResponse *HTTPResponse = (NSHTTPURLResponse *)response;
+		
+		NSInteger statusCode = HTTPResponse.statusCode;
+		if(statusCode != 200)
+		{
+			[self stopConnection];
+				
+			self.downloadProgress = 0.0;
+			self.doneSignal = @NO;
+			
+			NSDictionary *userInfo = @{ NSLocalizedDescriptionKey: [NSHTTPURLResponse localizedStringForStatusCode:statusCode] };
+			self.error = [NSError errorWithDomain:NSURLErrorDomain code:statusCode userInfo:userInfo];
+				
+			return;
+		}
+		
+		NSString *contentLengthString = [HTTPResponse.allHeaderFields objectForKey:@"Content-Length"];
+		long long contentLength = [contentLengthString longLongValue];
+		self.contentLength = contentLength > 0 ? contentLength : 0;
+		
+		self.content = [NSMutableData dataWithCapacity:(NSUInteger)contentLength];
 	}
-	
-	NSString *contentLengthString = [HTTPResponse.allHeaderFields objectForKey:@"Content-Length"];
-	long long contentLength = [contentLengthString longLongValue];
-	self.contentLength = contentLength > 0 ? contentLength : 0;
-	
-	self.content = [NSMutableData dataWithCapacity:(NSUInteger)contentLength];
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
-	[self.content appendData:data];
-
-	if(self.contentLength > 0)
+	if(connection == self.connection)
 	{
-		double downloadProgress = (double)self.content.length / (double)self.contentLength;
-		if(downloadProgress > 1.0)
+		[self.content appendData:data];
+
+		if(self.contentLength > 0)
 		{
-			downloadProgress = 1.0;
+			double downloadProgress = (double)self.content.length / (double)self.contentLength;
+			if(downloadProgress > 1.0)
+			{
+				downloadProgress = 1.0;
+			}
+			
+			self.downloadProgress = downloadProgress;
 		}
-		
-		self.downloadProgress = downloadProgress;
 	}
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-	NSError *error = nil;
-	NSDictionary *JSON = [NSJSONSerialization JSONObjectWithData:self.content options:0 error:&error];
-	if(JSON != nil)
+	if(connection == self.connection)
 	{
-		self.parsedJSON = JSON;
+		NSError *error = nil;
+		NSDictionary *JSON = [NSJSONSerialization JSONObjectWithData:self.content options:0 error:&error];
+		if(JSON != nil)
+		{
+			self.parsedJSON = JSON;
+			
+			self.downloadProgress = 1.0;
+			self.doneSignal = @YES;
+		}
+		else
+		{		
+			self.downloadProgress = 0.0;
+			self.doneSignal = @NO;
+			
+			self.error = error;
+		}
 		
-		self.downloadProgress = 1.0;
-		self.doneSignal = @YES;
+		[self stopConnection];
 	}
-	else
-	{		
-		self.downloadProgress = 0.0;
-		self.doneSignal = @NO;
-		
-		self.error = error;
-	}
-	
-	[self stopConnection];
 }
 
 @end
