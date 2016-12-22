@@ -220,28 +220,8 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 		if([URL.scheme isEqualToString:@"file"])
 		{
 			NSData *data = [NSData dataWithContentsOfURL:URL];
-			NSDictionary *JSON = nil;
-			NSError *error = nil;
 			
-			if(data != nil)
-			{
-				JSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-			}
-			
-			if(JSON != nil)
-			{
-				self.parsedJSON = JSON;
-				
-				self.downloadProgress = 1.0;
-				self.doneSignal = @YES;
-			}
-			else
-			{
-				self.error = error;
-
-				self.downloadProgress = 0.0;
-				self.doneSignal = @NO;
-			}
+			[self extractJSON:data];
 		}
 		else
 		{
@@ -351,25 +331,37 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 {
 	if(connection == self.connection)
 	{
-		NSError *error = nil;
-		NSDictionary *JSON = [NSJSONSerialization JSONObjectWithData:self.content options:0 error:&error];
-		if(JSON != nil)
-		{
-			self.parsedJSON = JSON;
-			
-			self.downloadProgress = 1.0;
-			self.doneSignal = @YES;
-		}
-		else
-		{		
-			self.downloadProgress = 0.0;
-			self.doneSignal = @NO;
-			
-			self.error = error;
-		}
+		[self extractJSON:self.content];
 		
 		[self stopConnection];
 	}
+}
+
+- (void)extractJSON:(NSData*)data
+{
+	NSDictionary *JSON = nil;
+	NSError *error = nil;
+	
+	if(data != nil)
+	{
+		JSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+	}
+	
+	if(JSON != nil)
+	{
+		self.parsedJSON = JSON;
+		
+		self.downloadProgress = 1.0;
+		self.doneSignal = @YES;
+	}
+	else
+	{
+		self.downloadProgress = 0.0;
+		self.doneSignal = @NO;
+		
+		self.error = error;
+	}
+
 }
 
 @end

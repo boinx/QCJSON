@@ -376,10 +376,14 @@ static NSString * QCJSONStreamingPlugInInputReplaceXMLEntities = @"inputReplaceX
 					}
 					
 					NSData *data = [message dataUsingEncoding:NSUTF8StringEncoding];
-					
+					NSDictionary *JSON = nil;
 					NSError *error = nil;
-					NSDictionary *JSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-										
+					
+					if(data!=nil)
+					{
+						JSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+					}
+					
 					if(JSON != nil)
 					{
 						self.parsedJSON = JSON;
