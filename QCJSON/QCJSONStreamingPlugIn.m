@@ -26,8 +26,8 @@ static NSString * QCJSONStreamingPlugInInputReplaceXMLEntities = @"inputReplaceX
 // only the connectionThread must access this properties
 @property (nonatomic, strong) NSTimer *connectionThreadTimer;
 @property (nonatomic, strong) NSURLConnection *connection;
-@property (nonatomic, strong) NSMutableString *jsonMessage;
-@property (nonatomic, assign) NSInteger jsonLength;
+// @property (nonatomic, strong) NSMutableString *jsonMessage;
+// @property (nonatomic, assign) NSInteger jsonLength;
 
 @property (atomic, strong) NSDictionary *parsedJSON;
 @property (atomic, strong) NSNumber *statusCode;
@@ -59,8 +59,8 @@ static NSString * QCJSONStreamingPlugInInputReplaceXMLEntities = @"inputReplaceX
 @synthesize connectionThread = _connectionThread;
 @synthesize connectionThreadTimer = _connectionThreadTimer;
 @synthesize connection = _connection;
-@synthesize jsonMessage = _jsonMessage;
-@synthesize jsonLength = _jsonLength;
+// @synthesize jsonMessage = _jsonMessage;
+// @synthesize jsonLength = _jsonLength;
 
 @synthesize parsedJSON = _parsedJSON;
 @synthesize statusCode = _statusCode;
@@ -181,7 +181,7 @@ static NSString * QCJSONStreamingPlugInInputReplaceXMLEntities = @"inputReplaceX
 	[self.connection cancel];
 	
 	self.connection = nil;
-	self.jsonMessage = nil;
+	// self.jsonMessage = nil;
 
 	self.parsedJSON = nil;
 	self.statusCode = nil;
@@ -252,7 +252,7 @@ static NSString * QCJSONStreamingPlugInInputReplaceXMLEntities = @"inputReplaceX
 			[request setValue:value forHTTPHeaderField:key];
 		}
 	
-		self.jsonMessage = nil;
+		// self.jsonMessage = nil;
 		
 		self.connection = [NSURLConnection connectionWithRequest:request delegate:self];
 	
@@ -326,82 +326,131 @@ static NSString * QCJSONStreamingPlugInInputReplaceXMLEntities = @"inputReplaceX
 	self.connecting = @NO;
 	self.connected = @YES;
 	
-	self.jsonLength = 0;
-	self.jsonMessage = nil;
+	// self.jsonLength = 0;
+	// self.jsonMessage = nil;
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
 	@autoreleasepool {
 		NSString *string = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
+	//	NSLog(@"datalength = %d, %@",  data.length, string);
+		NSString *delimiter = nil;
+		if([string containsString:@"\r\n"])
+		{
+			delimiter = @"\r\n";
+		}
+		else if ([string containsString:@"\r"])
+		{
+			delimiter = @"\r";
+		}
+		else
+		{
+			delimiter = @"\n";
+		}
 		
-		NSString *delimiter = @"\r\n";
-		
-		NSInteger length = self.jsonLength;
-		NSMutableString *message = self.jsonMessage;
+//		NSInteger length = self.jsonLength;
+		NSMutableString *message = nil; // self.jsonMessage;
 		
 		NSArray *components = [string componentsSeparatedByString:delimiter];
 		for(NSString *component in components)
 		{
-			if(length == 0)
+//			if(length == 0)
+//			{
+//				length = [component integerValue];
+//				message = [NSMutableString stringWithCapacity:length];
+//			}
+//			else
+//			{
+//				[message appendString:component];
+//
+//				if(message.length < length)
+//				{
+//					// The delimiter is counted in the length, but must not appear in the JSON message.
+//					length -= delimiter.length;
+//				}
+//
+//				if(message.length >= length)
+//				{
+//					if(message.length != length)
+//					{
+//						// TODO: error logging? message is longer than expected
+//					}
+//
+//					if(self.replaceXMLEntities)
+//					{
+//						// TODO: improve this, still good enough for twitter
+//						[message replaceOccurrencesOfString:@"&quot;" withString:@"\\\"" options:0 range:NSMakeRange(0, message.length)]; // must be escaped
+//						[message replaceOccurrencesOfString:@"&apos;" withString:@"'" options:0 range:NSMakeRange(0, message.length)];
+//						[message replaceOccurrencesOfString:@"&lt;"   withString:@"<" options:0 range:NSMakeRange(0, message.length)];
+//						[message replaceOccurrencesOfString:@"&gt;"   withString:@">" options:0 range:NSMakeRange(0, message.length)];
+//						[message replaceOccurrencesOfString:@"&amp;"  withString:@"&" options:0 range:NSMakeRange(0, message.length)];
+//					}
+//
+//					NSData *data = [message dataUsingEncoding:NSUTF8StringEncoding];
+//					NSDictionary *JSON = nil;
+//					NSError *error = nil;
+//
+//					if(data!=nil)
+//					{
+//						JSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+//					}
+//
+//					if(JSON != nil)
+//					{
+//						self.parsedJSON = JSON;
+//						self.doneSignal = @YES;
+//					}
+//					else
+//					{
+//						self.error = error;
+//					}
+//
+//					length = 0;
+//					message = nil;
+//				}
+//			}
+			
+			message = [component mutableCopy];
+			
+			if(self.replaceXMLEntities)
 			{
-				length = [component integerValue];
-				message = [NSMutableString stringWithCapacity:length];
+				// TODO: improve this, still good enough for twitter
+				[message replaceOccurrencesOfString:@"&quot;" withString:@"\\\"" options:0 range:NSMakeRange(0, message.length)]; // must be escaped
+				[message replaceOccurrencesOfString:@"&apos;" withString:@"'" options:0 range:NSMakeRange(0, message.length)];
+				[message replaceOccurrencesOfString:@"&lt;"   withString:@"<" options:0 range:NSMakeRange(0, message.length)];
+				[message replaceOccurrencesOfString:@"&gt;"   withString:@">" options:0 range:NSMakeRange(0, message.length)];
+				[message replaceOccurrencesOfString:@"&amp;"  withString:@"&" options:0 range:NSMakeRange(0, message.length)];
 			}
-			else
-			{
-				[message appendString:component];
-				
-				if(message.length < length)
-				{
-					// The delimiter is counted in the length, but must not appear in the JSON message.
-					length -= delimiter.length;
-				}
 
-				if(message.length >= length)
-				{
-					if(message.length != length)
-					{
-						// TODO: error logging? message is longer than expected
-					}
-					
-					if(self.replaceXMLEntities)
-					{
-						// TODO: improve this, still good enough for twitter
-						[message replaceOccurrencesOfString:@"&quot;" withString:@"\\\"" options:0 range:NSMakeRange(0, message.length)]; // must be escaped
-						[message replaceOccurrencesOfString:@"&apos;" withString:@"'" options:0 range:NSMakeRange(0, message.length)];
-						[message replaceOccurrencesOfString:@"&lt;"   withString:@"<" options:0 range:NSMakeRange(0, message.length)];
-						[message replaceOccurrencesOfString:@"&gt;"   withString:@">" options:0 range:NSMakeRange(0, message.length)];
-						[message replaceOccurrencesOfString:@"&amp;"  withString:@"&" options:0 range:NSMakeRange(0, message.length)];
-					}
-					
-					NSData *data = [message dataUsingEncoding:NSUTF8StringEncoding];
-					NSDictionary *JSON = nil;
-					NSError *error = nil;
-					
-					if(data!=nil)
-					{
-						JSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-					}
-					
-					if(JSON != nil)
-					{
-						self.parsedJSON = JSON;
-						self.doneSignal = @YES;
-					}
-					else
-					{
-						self.error = error;
-					}
-					
-					length = 0;
-					message = nil;
-				}
+			// remove any text before json data (e.g. Facebook sends "data : {...}")
+			NSRange range = [message rangeOfString:@"{"];
+			NSUInteger location = range.location;
+			if (location != NSNotFound && location > 0)
+			{
+				[message deleteCharactersInRange:NSMakeRange(0, location-1)];
 			}
+			
+			// convert UTF8-Charayters
+			NSData *data = [message dataUsingEncoding:NSUTF8StringEncoding];
+			NSDictionary *JSON = nil;
+			NSError *error = nil;
+
+			if(data!=nil)
+			{
+				JSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+			}
+
+			if(JSON != nil)
+			{
+				self.parsedJSON = JSON;
+				self.doneSignal = @YES;
+			}
+
 		}
 		
-		self.jsonLength = length;
-		self.jsonMessage = message;
+//		self.jsonLength = length;
+//		self.jsonMessage = message;
 	}
 }
 

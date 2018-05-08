@@ -13,8 +13,8 @@
 	NSThread *_connectionThread;
 	NSTimer *_connectionThreadTimer;
 	NSURLConnection *_connection;
-	NSMutableString *_jsonMessage;
-	NSInteger _jsonLength;
+	// NSMutableString *_jsonMessage;
+	// NSInteger _jsonLength;
 
 	NSDictionary *_parsedJSON;
 	NSNumber *_statusCode;
