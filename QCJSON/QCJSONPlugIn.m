@@ -32,6 +32,7 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 @property (copy) NSDictionary *HTTPHeaders;
 
 @property (strong) NSDictionary *parsedJSON;
+@property (atomic, strong) NSNumber *statusCode;
 @property (assign) double downloadProgress;
 @property (assign) NSNumber *doneSignal;
 @property (strong) NSError *error;
@@ -48,6 +49,7 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 @dynamic inputUpdateSignal;
 
 @dynamic outputParsedJSON;
+@dynamic outputStatusCode;
 @dynamic outputDownloadProgress;
 @dynamic outputDoneSignal;
 
@@ -61,6 +63,7 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 @synthesize HTTPHeaders = _HTTPHeaders;
 
 @synthesize parsedJSON = _parsedJSON;
+@synthesize statusCode = _statusCode;
 @synthesize downloadProgress = _downloadProgress;
 @synthesize doneSignal = _doneSignal;
 @synthesize error = _error;
@@ -99,6 +102,11 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 	if([key isEqualToString:@"outputParsedJSON"])
 	{
 		return @{ QCPortAttributeNameKey: @"Parsed JSON" };
+	}
+	
+	if([key isEqualToString:@"outputStatusCode"])
+	{
+		return @{ QCPortAttributeNameKey: @"HTTP Status Code" };
 	}
 	
 	if([key isEqualToString:@"outputDownloadProgress"])
@@ -158,6 +166,7 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 	self.content = nil;
 
 	self.parsedJSON = nil;
+	self.statusCode = nil;
 	self.doneSignal = nil;
 	self.error = nil;
 
@@ -236,6 +245,7 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 	
 			self.connection = [NSURLConnection connectionWithRequest:request delegate:self];
 	
+			self.statusCode = @0;
 			self.downloadProgress = 0.0;
 			self.doneSignal = NO;
 		}
@@ -278,6 +288,7 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 		{
 			[self stopConnection];
 			
+			self.statusCode = @0;
 			self.downloadProgress = 0.0;
 			self.doneSignal = @NO;
 			
@@ -291,6 +302,8 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 		{
 			[self stopConnection];
 				
+			self.statusCode = @(statusCode);
+
 			self.downloadProgress = 0.0;
 			self.doneSignal = @NO;
 			
@@ -300,6 +313,8 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 			return;
 		}
 		
+		self.statusCode = @200;
+
 		NSString *contentLengthString = [HTTPResponse.allHeaderFields objectForKey:@"Content-Length"];
 		long long contentLength = [contentLengthString longLongValue];
 		self.contentLength = contentLength > 0 ? contentLength : 0;
@@ -405,6 +420,12 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 			
 			self.doneSignal = nil;
 		}
+	}
+	
+	if(self.statusCode != nil)
+	{
+		self.outputStatusCode = self.statusCode.unsignedIntegerValue;
+		self.statusCode = nil;
 	}
 	
 	if(self.downloadProgress >= 0.0)

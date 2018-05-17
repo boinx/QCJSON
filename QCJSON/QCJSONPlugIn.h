@@ -20,6 +20,7 @@
 	NSDictionary *_HTTPHeaders;
 
 	NSDictionary *_parsedJSON;
+	NSNumber *_statusCode;
 	double _downloadProgress;
 	NSNumber *_doneSignal;
 	NSError *_error;	
@@ -30,6 +31,7 @@
 @property (assign) BOOL inputUpdateSignal;
 
 @property (assign) NSDictionary *outputParsedJSON;
+@property (assign) NSUInteger outputStatusCode;
 @property (assign) double outputDownloadProgress;
 @property (assign) BOOL outputDoneSignal;
 
