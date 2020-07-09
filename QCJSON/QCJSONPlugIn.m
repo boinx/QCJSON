@@ -247,7 +247,7 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 	
 			self.statusCode = @0;
 			self.downloadProgress = 0.0;
-			self.doneSignal = NO;
+			self.doneSignal = @NO;
 		}
 	}
 }
