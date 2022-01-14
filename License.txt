@@ -11,3 +11,6 @@ Also see:
 
 JSON:
 http://www.json.org/
+
+XML-Parser:
+https://github.com/bcaccinolo/XML-to-NSDictionary/

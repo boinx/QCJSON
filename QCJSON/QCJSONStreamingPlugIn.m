@@ -160,10 +160,10 @@ static NSString * QCJSONStreamingPlugInInputReplaceXMLEntities = @"inputReplaceX
 	self = [super init];
 	if(self != nil)
 	{
-		NSThread *connectionThread = [[[NSThread alloc] initWithTarget:self selector:@selector(startConnectionThread) object:nil] autorelease];
+		NSThread *connectionThread = [[NSThread alloc] initWithTarget:self selector:@selector(startConnectionThread) object:nil];
 		self.connectionThread = connectionThread;
 		
-		connectionThread.name = @"QCJSON.ConnectionThead";
+		connectionThread.name = @"QCJSON.ConnectionThread";
 		[connectionThread start];
 	}
 	return self;
@@ -189,8 +189,6 @@ static NSString * QCJSONStreamingPlugInInputReplaceXMLEntities = @"inputReplaceX
 	self.connecting = nil;
 	self.connected = nil;
 	self.error = nil;
-	
-	[super dealloc];
 }
 
 - (void)startConnectionThread
@@ -333,7 +331,7 @@ static NSString * QCJSONStreamingPlugInInputReplaceXMLEntities = @"inputReplaceX
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
 	@autoreleasepool {
-		NSString *string = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
+		NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 	//	NSLog(@"datalength = %d, %@",  data.length, string);
 		NSString *delimiter = nil;
 		if([string containsString:@"\r\n"])

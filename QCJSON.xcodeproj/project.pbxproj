@@ -12,6 +12,7 @@
 		50B9C58B17956B490014D150 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B9C58A17956B490014D150 /* Security.framework */; };
 		50FCC98C14FF88F7003C383D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50FCC98B14FF88F7003C383D /* Cocoa.framework */; };
 		50FCC98E14FF88F7003C383D /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50FCC98D14FF88F7003C383D /* Quartz.framework */; };
+		9862154927918E4A007BA022 /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 9862154827918E4A007BA022 /* XMLReader.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,8 @@
 		50FCC99114FF88F7003C383D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		50FCC99214FF88F7003C383D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		50FCC99714FF88F7003C383D /* QCJSON-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "QCJSON-Info.plist"; sourceTree = "<group>"; };
+		9862154727918E4A007BA022 /* XMLReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLReader.h; sourceTree = "<group>"; };
+		9862154827918E4A007BA022 /* XMLReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLReader.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +109,8 @@
 				504ECD90176F3C6C00AD30BB /* QCJSONPlugIn.m */,
 				50B9C58317956AA80014D150 /* QCJSONStreamingPlugIn.h */,
 				50B9C58417956AA80014D150 /* QCJSONStreamingPlugIn.m */,
+				9862154727918E4A007BA022 /* XMLReader.h */,
+				9862154827918E4A007BA022 /* XMLReader.m */,
 				50FCC99714FF88F7003C383D /* QCJSON-Info.plist */,
 			);
 			path = QCJSON;
@@ -179,6 +184,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				504ECD91176F3C6C00AD30BB /* QCJSONPlugIn.m in Sources */,
+				9862154927918E4A007BA022 /* XMLReader.m in Sources */,
 				50B9C58517956AA80014D150 /* QCJSONStreamingPlugIn.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -193,6 +199,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
@@ -244,6 +251,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
@@ -283,6 +291,7 @@
 		50FCC9A214FF88F7003C383D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
@@ -301,6 +310,7 @@
 		50FCC9A314FF88F7003C383D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;

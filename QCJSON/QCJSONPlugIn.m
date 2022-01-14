@@ -7,6 +7,8 @@
 
 #import "QCJSONPlugIn.h"
 
+#import "XMLReader.h"
+
 #ifndef NSAppKitVersionNumber10_7
 #define NSAppKitVersionNumber10_7 1138
 #endif
@@ -14,6 +16,7 @@
 
 static NSString * QCJSONPlugInInputJSONLocation = @"inputJSONLocation";
 static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
+static NSString * QCJSONPlugInInputDataType = @"inputDataType";
 
 
 @interface QCJSONPlugIn () <NSURLConnectionDelegate, NSURLConnectionDataDelegate>
@@ -32,9 +35,10 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 @property (copy) NSDictionary *HTTPHeaders;
 
 @property (strong) NSDictionary *parsedJSON;
+@property (assign) NSUInteger dataType;
 @property (atomic, strong) NSNumber *statusCode;
 @property (assign) double downloadProgress;
-@property (assign) NSNumber *doneSignal;
+@property (atomic, strong) NSNumber *doneSignal;
 @property (strong) NSError *error;
 
 @end
@@ -47,11 +51,13 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 @dynamic inputJSONLocation;
 @dynamic inputHTTPHeaders;
 @dynamic inputUpdateSignal;
+@dynamic inputDataType;
 
 @dynamic outputParsedJSON;
 @dynamic outputStatusCode;
 @dynamic outputDownloadProgress;
 @dynamic outputDoneSignal;
+@dynamic outputError;
 
 @synthesize connectionThread = _connectionThread;
 @synthesize connectionThreadTimer = _connectionThreadTimer;
@@ -63,6 +69,7 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 @synthesize HTTPHeaders = _HTTPHeaders;
 
 @synthesize parsedJSON = _parsedJSON;
+@synthesize dataType = _dataType;
 @synthesize statusCode = _statusCode;
 @synthesize downloadProgress = _downloadProgress;
 @synthesize doneSignal = _doneSignal;
@@ -76,9 +83,9 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 + (NSDictionary *)attributes
 {
 	return @{
-		QCPlugInAttributeNameKey: @"JSON Importer",
-  		QCPlugInAttributeDescriptionKey: @"JSON replacement for XML Importer",
-		QCPlugInAttributeCopyrightKey: @"© 2013 Boinx Software Ltd."
+		QCPlugInAttributeNameKey: @"JSON/XML Importer",
+		QCPlugInAttributeDescriptionKey: @"Replacement for XML Importer (can import XML or JSON)",
+		QCPlugInAttributeCopyrightKey: @"© 2013-2022 Boinx Software Ltd."
 	};
 }
 
@@ -99,6 +106,16 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 		return @{ QCPortAttributeNameKey: @"Update Signal" };
 	}
 		
+	if([key isEqualToString:QCJSONPlugInInputDataType])
+	{
+		return @{ QCPortAttributeNameKey: @"Data Type",
+				  QCPortAttributeMinimumValueKey: @(0),
+				  QCPortAttributeMaximumValueKey: @(1),
+				  QCPortAttributeMenuItemsKey: @[@"JSON", @"XML"],
+				  QCPortAttributeDefaultValueKey: @(0)
+		};
+	}
+		
 	if([key isEqualToString:@"outputParsedJSON"])
 	{
 		return @{ QCPortAttributeNameKey: @"Parsed JSON" };
@@ -117,6 +134,13 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 	if([key isEqualToString:@"outputDoneSignal"])
 	{
 		return @{ QCPortAttributeNameKey: @"Done Signal" };
+	}
+
+	if([key isEqualToString:@"outputError"])
+	{
+		return @{ QCPortAttributeNameKey: @"Error" ,
+				  QCPortAttributeDefaultValueKey: @""
+		};
 	}
 
 	return nil;
@@ -145,7 +169,7 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 		NSThread *connectionThread = [[NSThread alloc] initWithTarget:self selector:@selector(startConnectionThread) object:nil];
 		self.connectionThread = connectionThread;
 		
-		connectionThread.name = @"QCJSON.ConnectionThead";
+		connectionThread.name = @"QCJSON.ConnectionThread";
 		[connectionThread start];
 	}
 	return self;
@@ -169,11 +193,11 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 	self.statusCode = nil;
 	self.doneSignal = nil;
 	self.error = nil;
-
+	self.outputError = nil;
+	
 	self.HTTPHeaders = nil;
 	self.JSONLocation = nil;
 	
-	[super dealloc];
 }
 
 - (void)startConnectionThread
@@ -309,7 +333,6 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 			
 			NSDictionary *userInfo = @{ NSLocalizedDescriptionKey: [NSHTTPURLResponse localizedStringForStatusCode:statusCode] };
 			self.error = [NSError errorWithDomain:NSURLErrorDomain code:statusCode userInfo:userInfo];
-				
 			return;
 		}
 		
@@ -359,7 +382,14 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 	
 	if(data != nil)
 	{
-		JSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+        if(self.dataType == 0)
+        {
+            JSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+        }
+        else
+        {
+            JSON = [XMLReader dictionaryForXMLData:data error:&error];
+        }
 	}
 	
 	if(JSON != nil)
@@ -397,9 +427,11 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 {
 	if([self didValueForInputKeyChange:QCJSONPlugInInputUpdateSignal] && self.inputUpdateSignal == YES)
 	{
+		// we need to copy everything for the background thread because it can't access the port values by "self.input..." (nor the output ports by "self.output...")
 		self.JSONLocation = self.inputJSONLocation;
 		self.HTTPHeaders = self.inputHTTPHeaders;
-
+		self.dataType = self.inputDataType;
+		
 		[self performSelector:@selector(startConnection) onThread:self.connectionThread withObject:nil waitUntilDone:NO];
 	}
 	
@@ -409,7 +441,8 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 		{
 			self.outputParsedJSON = self.parsedJSON;
 			self.outputDoneSignal = YES;
-			
+			self.outputError = @"";
+
 			self.parsedJSON = nil;
 			
 			self.doneSignal = @NO;
@@ -437,8 +470,9 @@ static NSString * QCJSONPlugInInputUpdateSignal = @"inputUpdateSignal";
 	
 	if(self.error)
 	{
-		[context logMessage:@"JSON Import error: %@", self.error];
+		[context logMessage:@"Import error: %@", self.error];
 		
+		self.outputError = [NSString stringWithFormat:@"%@", self.error];
 		self.error = nil;
 	}
 	
