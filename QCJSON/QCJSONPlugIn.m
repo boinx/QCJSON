@@ -252,9 +252,18 @@ static NSString * QCJSONPlugInInputDataType = @"inputDataType";
 		
 		if([URL.scheme isEqualToString:@"file"])
 		{
-			NSData *data = [NSData dataWithContentsOfURL:URL];
+			NSError *error = nil;
 			
-			[self extractJSON:data];
+			NSData *data = [NSData dataWithContentsOfURL:URL options:NSDataReadingUncached error:&error];
+			
+			if(data != nil)
+			{
+				[self extractJSON:data];
+			}
+			else
+			{
+				self.error = error;
+			}
 		}
 		else
 		{
