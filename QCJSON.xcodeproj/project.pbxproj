@@ -299,7 +299,7 @@
 				GCC_PREFIX_HEADER = "QCJSON/QCJSON-Prefix.pch";
 				INFOPLIST_FILE = "QCJSON/QCJSON-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Graphics/Quartz Composer Plug-Ins";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.15.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.boinx.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -318,7 +318,7 @@
 				GCC_PREFIX_HEADER = "QCJSON/QCJSON-Prefix.pch";
 				INFOPLIST_FILE = "QCJSON/QCJSON-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Graphics/Quartz Composer Plug-Ins";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.15.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.boinx.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
